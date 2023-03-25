@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address = $row["address"];
         if($username == 'admin'){
             echo "<script>alert('Hi ! Welcome back, " . $username . "!')</script>";
-            echo "<script>window.location.href='pages/displayMember.php' </script>";
+            echo "<script>window.location.href='pages/admin-panel.php' </script>";
         }
         else{
             echo "<script>alert('ล็อกอินสำเร็จ Welcome, " . $username . "!')</script>";

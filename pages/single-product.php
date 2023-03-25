@@ -130,7 +130,7 @@
         <div class="col-md-7">
           <div class="single-product-content">
             <h3><?php echo $p_name ?></h3>
-            <p class="single-product-pricing"><span>Price</span> $<?php echo $p_price ?></p>
+            <p class="single-product-pricing"><span>Price</span><?php echo $p_price ?>฿</p>
             <p>
               <?php echo $p_detail ?>
             </p>
@@ -189,59 +189,13 @@
 
 
       <!-- product section -->
+
+      <!-- ../p_img/product12.jpg -->
       <?php
-      $sql = $conn->display_prod();
-      $data_array = array();
-      while ($data = mysqli_fetch_array($sql)) {
-        $data_array[] = $data; // เก็บข้อมูลลงในอาร์เรย์
-      }
-
-
-
-      $chunks = array_chunk($data_array, 3); // แบ่งข้อมูลเป็นกลุ่มๆ ที่มีจำนวนคอลัมน์เท่ากับ 3
-
-      foreach ($chunks as $chunk) { // วนลูปแสดงผลข้อมูลที่ถูกแบ่งเป็นกลุ่ม
+      include_once("prod_section.php");
       ?>
-        <div class="container">
-          <div class="row">
-            <?php
-            foreach ($chunk as $data) { // วนลูปแสดงผลแต่ละคอลัมน์ของแต่ละแถว
-              $str = $data['prod_img'];
-              // $id = $data['prod_id'];
-              $pathImg = substr($str, 3);
-            ?>
 
-
-              <div class="col-lg-4 col-md-6 text-center">
-                <div class="single-product-item">
-
-                  <?php
-                  echo '<a href="' . $parentPath2 . '/single-product.php?q=' . base64_encode($data['prod_id']) . '"><img src="' . $data['prod_img'] . '" alt="" /></a>';
-                  ?>
-
-                  <h3>
-                    <?php echo $data['prod_name'] ?>
-                  </h3>
-                  <p class="product-price"><span>Per Kg</span>
-                    <?php echo $data['prod_price'] ?>
-                  </p>
-                  <a href="../cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-
-                  <!-- <a href="<?php echo $parentPath2 ?>/cart.php?q=<?php echo base64_encode($data['prod_id']); ?>" class="cart-btn">
-                    <i class="fas fa-shopping-cart"></i> Add to Cart</a> -->
-
-                </div>
-              </div>
-            <?php
-            }
-            ?>
-          </div>
-        </div>
-      <?php
-      }
-      ?>
-    </div>
-  </div>
+      
   <!-- end product section -->
 
 

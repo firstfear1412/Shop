@@ -51,7 +51,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
     <h2 class="animated fadeInDown ">Tools</h2>
     <div class="item-container">
         <a href="displayMember.php" class="item-box">Display Member</a>
-        <a href="displayProd.html" class="item-box">Display Product</a>
+        <a href="displayProd.php" class="item-box">Display Product</a>
         <a href="page3.html" class="item-box">Box 3</a>
         <a href="page4.html" class="item-box">Box 4</a>
     </div>
