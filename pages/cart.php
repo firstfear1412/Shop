@@ -1,33 +1,79 @@
 <?php
-// session_start();
-include_once("connectDB.php");
-$conn = new DB_conn;
-$parentPath = '/Shop';
-$parentPath2 = '/Shop/pages';
-
-if (!empty($_GET["act"])) {
-	$id = $_GET["id"];
-	$act = $_GET["act"];
-	if ($act == "add" && $id) {
-		if (isset($_SESSION['cart'][$id])) {
-			$_SESSION['cart'][$id]++;
+error_reporting(error_reporting() & ~E_NOTICE);
+session_start();
+if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'])) {
+    $p_id = $_REQUEST['p_id'];
+	$act = $_REQUEST['act'];
+	$qty = $_REQUEST['qty'];
+	if ($act == 'add' && !empty($p_id)) {
+		if (!isset($_SESSION['shopping_cart'])) {
+	
+			$_SESSION['shopping_cart'] = array();
 		} else {
-			$_SESSION['cart'][$id] = 1;
+		}
+		if (isset($_SESSION['shopping_cart'][$p_id])) {
+	
+			$_SESSION['shopping_cart'][$p_id] += $qty;
+		} else {
+	
+			$_SESSION['shopping_cart'][$p_id] = $qty;
 		}
 	}
-
-	if ($act == "remove" and !empty($id)) {
-		unset($_SESSION['cart'][$id]);
+	
+	if ($act == 'remove' && !empty($p_id))  //ยกเลิกการสั่งซื้อ
+	{
+		unset($_SESSION['shopping_cart'][$p_id]);
 	}
-
-	if ($act == 'edit') {
-		$amount_array = $_POST['quantity'];
-		foreach ($amount_array as $id => $amount) {
-			$_SESSION['cart'][$id] = $amount;
+	
+	if ($act == 'update' ) {
+	
+		// $amount_array = $_POST['amount'];
+		// foreach ($amount_array as $p_id => $amount) {
+		// 	$_SESSION['shopping_cart'][$p_id] = $amount;
+		// 	echo "<script>window.location='../index.php'</script>";
+		// }
+	
+	
+	
+		 if (isset($_POST["amount"]) && $_POST["amount"] == true) {
+				$amount_array = $_POST['amount'];
+				foreach ($amount_array as $p_id => $amount) {
+				$_SESSION['shopping_cart'][$p_id] = $amount;
+				echo "<script>window.location='../index.php'</script>";
 		}
+		} else {
+			
+			echo "<script>window.location='../index.php'</script>";
+		}
+	
+	if ($act == 'clear' && !empty($p_id)) {
+	
+		unset($_SESSION['shopping_cart']);
 	}
+	}
+	
+	
+	
+	
+
+} else {
+    $p_id = 0;
+	$qty = 0;
+
 }
+// $p_id = $_REQUEST['p_id'];
+// $act = $_REQUEST['act'];
+// $qty = $_REQUEST['qty'];
+// $qty = 0;
+
+
+
+
+
+
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,8 +81,7 @@ if (!empty($_GET["act"])) {
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description"
-		content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
 	<title>Cart</title>
@@ -66,10 +111,9 @@ if (!empty($_GET["act"])) {
 </head>
 
 <body>
-	<?php
-	include_once('header.php');
 
-	?>
+	<?php include_once('header.php'); ?>
+
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
 		<div class="container">
@@ -84,6 +128,9 @@ if (!empty($_GET["act"])) {
 		</div>
 	</div>
 	<!-- end breadcrumb section -->
+
+
+
 	<!-- cart -->
 	<div class="cart-section mt-150 mb-150">
 		<div class="container">
@@ -100,39 +147,129 @@ if (!empty($_GET["act"])) {
 									<th class="product-quantity">Quantity</th>
 									<th class="product-total">Total</th>
 								</tr>
-							</thead>
-							<tbody>
-								<?php
-								$total = 0;
-								$shipp = 0;
-								if (!empty($_SESSION['cart'])) {
-									foreach ($_SESSION['cart'] as $id => $qty) {
-										$shipp = 70;
-										$query = $conn->select_product($id);
-										$data = mysqli_fetch_array($query);
-										$sum = $data['prod_price'] * $qty;
-										$total += $sum; ?>
-										<tr class="table-body-row" action="cart.php?id=<?php echo $data['prod_id'] ?>">
-											<td class="product-remove"><a
-													href="cart.php?id=<?php echo $data['prod_id'] ?>&act=remove"><i
-														class="far fa-window-close"></i></a></td>
-											<td class="product-image"><img src="<?php echo $data['prod_img'] ?>" alt="">
-											</td>
-											<td class="product-name">
-												<?php echo $data['prod_name'] ?>
-											</td>
-											<td class="product-price"><div id="price" name="price" value="<?php echo $data['prod_price'] ?>"><?php echo $data['prod_price'] ?></div></td>
-											<td class="product-quantity"><input type="number" value="<?php echo $qty ?>" id="quantity" name="quantity"></td>
-											<td class="product-total">
-												<p id="total"><?php echo $total ?></p>
-											</td>
-											
 
-										</tr>
+
+
+							</thead>
+
+							<form id="frmcart" name="frmcart" method="post" action="?p_id=0&qty=0&act=update">
+
+								<tbody>
+									<?php
+
+									$sizearr = sizeof($_SESSION['shopping_cart']);
+									echo "<script>const numProducts = $sizearr;</script>";
+									?>
+
+									<?php
+									$numProducts = $sizearr;
+									include_once("connectDB.php");
+									$conn = new DB_conn; //สร้าง object ชื่อ $condb
+									$parentPath = '/Shop';
+									$parentPath2 = '/Shop/pages';
+									?>
+									<div id="product-form">
 										<?php
+
+										$i = 1;
+										if (!empty($_SESSION['shopping_cart'])) {
+
+											$total = 0;
+											foreach ($_SESSION['shopping_cart'] as $p_id => $p_qty) {
+
+												// $sum = $row['prod_price'] * $p_qty;
+												// $total += $sum;
+												$sql = $conn->select_product($p_id);
+												while ($data = mysqli_fetch_array($sql)) {
+
+
+													$sum = $data['prod_price'] * $p_qty;
+													$total += $sum;
+
+													$sumship = 45;
+													$totalsumship = $total + $sumship;
+
+													echo "<script>const sumshipJS = $sumship;</script>";
+										?>
+
+
+													<tr class="table-body-row">
+
+														<td class="product-remove"><a href="cart.php?p_id=<?php echo $data['prod_id'] ?>&act=remove&qty"><i class="far fa-window-close"></i></a></td>
+														<!-- รูป -->
+														<td class="product-image"><img src="<?php echo $data['prod_img'] ?>" alt=""></td>
+
+														<!-- ชื่อ -->
+														<td class="product-name"><?php echo $data['prod_name'] ?></td>
+
+														<!-- ราคา -->
+														<td class="product-price"><?php echo $data['prod_price'] ?><p></p><input type="hidden" id="price<?php echo $i; ?>" name="price<?php echo $i; ?>" value="<?php echo $data['prod_price']; ?>"></td>
+
+														<!-- จำนวนชิ้น -->
+														<?php echo "<td class='product-quantity'><input type='number' id='quantity$i' name='amount[$p_id]' value='$p_qty' min='1' onchange='updateTotal()'></td>" ?>
+
+
+														<!-- ราคาของสินค้า -->
+														<td class="product-total">
+															<p><span type="text" id="total<?php echo $i; ?>" value="<?php echo $data["prod_price"] * $p_qty; ?>"><?php echo $data["prod_price"] * $p_qty; ?></span></p>
+														</td>
+
+
+													</tr>
+
+												<?php $i++;
+												} ?>
+
+									</div>
+							<?php }
+										} ?>
+
+
+							<script>
+								const items = [];
+								for (let i = 1; i <= numProducts; i++) {
+									let price = parseInt(document.getElementById(`price${i}`).value);
+									let quantity = parseInt(document.getElementById(`quantity${i}`).value);
+
+
+									items.push({
+										price,
+										quantity
+									});
+
+
+								}
+
+								function updateTotal() {
+									let grandTotal = 0;
+
+
+									for (let i = 0; i < items.length; i++) {
+										const priceInputId = `price${i + 1}`;
+										const quantityInputId = `quantity${i + 1}`;
+
+										items[i].price = document.getElementById(priceInputId).value;
+										items[i].quantity = document.getElementById(quantityInputId).value;
+
+										let total = items[i].price * items[i].quantity;
+										grandTotal += total;
+
+										document.getElementById(`total${i + 1}`).innerHTML = total;
 									}
-								} ?>
-							</tbody>
+
+									document.getElementById("grandTotal").innerHTML = grandTotal.toFixed(2);
+
+									// Shipping = 1000;
+									grandTotal2 = grandTotal + sumshipJS;
+									document.getElementById("sumship").innerHTML = grandTotal2.toFixed(2);
+									// document.getElementById("grandTotal2").innerHTML = grandTotal + 1000;
+								}
+							</script>
+
+
+								</tbody>
+
+
 						</table>
 					</div>
 				</div>
@@ -149,55 +286,91 @@ if (!empty($_GET["act"])) {
 							<tbody>
 								<tr class="total-data">
 									<td><strong>Subtotal: </strong></td>
-									<td>0</td>
+									<td>
+
+										<?php
+
+										if (isset($total) && $total == true) {
+											echo '<p><span id="grandTotal" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+										} else {
+											$total = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumship
+											echo '<p><span id="grandTotal" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+										}
+										?>
+
+
+
+									</td>
+
+
 								</tr>
 								<tr class="total-data">
 									<td><strong>Shipping: </strong></td>
 									<td>
-										<?php echo $shipp ?>
+										<!-- <?php echo '<p><span id="sumship" value="' . number_format($sumship, 2) . '">' . number_format($sumship, 2) . '</span></p>'; ?> -->
+
+
+										<?php
+										if (isset($sumship) && $sumship == true) {
+											echo '<p><span id="sumships" value="' . number_format($sumship, 2) . '">' . number_format($sumship, 2) . '</span></p>';
+										} else {
+											$sumship = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumship
+											echo '<p><span id="sumships" value="' . number_format($sumship, 2) . '">' . number_format($sumship, 2) . '</span></p>';
+										}
+										?>
+
+
+
+
 									</td>
 								</tr>
 								<tr class="total-data">
 									<td><strong>Total: </strong></td>
 									<td>
-									<p id="totalprice"><?php echo $total ?></p>
+
+									<?php
+										if (isset($total) && $total == true) {
+											echo '<p><span id="sumship" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+										} else {
+											$total = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumship
+											echo '<p><span id="sumship" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+										}
+										?>
+									
+								
+										
+					
+
 									</td>
 								</tr>
 							</tbody>
 						</table>
-						<div class="cart-buttons">
-							<a href="<?php echo $parentPath2.'/cart.php'?>" class="boxed-btn">Update Cart</a>
-							<a href="checkout.html" class="boxed-btn black">Check Out</a>
-						</div>
-					</div>
 
-					<div class="coupon-section">
-						<h3>Apply Coupon</h3>
-						<div class="coupon-form-wrap">
-							<form action="index.html">
-								<p><input type="text" placeholder="Coupon"></p>
-								<p><input type="submit" value="Apply"></p>
+
+						<div class="cart-buttons">
+							<button name="ex" id="ex">Shipping</button>
 							</form>
+
+							<div class="cart-buttons">
+								<a href="checkout.html" class="boxed-btn black">Check Out</a>
+								<a href="cart.php?&act=clear" class="boxed-btn black"> Clear</a>
+							</div>
+
 						</div>
+
+
+
+
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	</div>
-	<!-- end cart -->
 
-	<?php
-	include_once("footer.php");
-	?>
-	<script>
 
-	</script>
-	<script src="assets/js/app.js"></script>
+
 
 </body>
+
+
 
 </html>

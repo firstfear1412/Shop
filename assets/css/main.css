@@ -2465,6 +2465,7 @@ a.cart-btn {
   background-color: #F28123;
   color: #fff;
   padding: 10px 20px;
+  width: 150px;
 }
 
 a.cart-btn i {
@@ -2545,6 +2546,12 @@ ul.product-share li a {
 table.cart-table {
   border: 1px solid #f9f9f9;
   width: 100%;
+}
+
+table.Display-Prod {
+  border: 1px solid #f9f9f9;
+  width: 100%;
+  margin-top: -50px;
 }
 
 thead {
@@ -3075,7 +3082,7 @@ body.admin-panel .admin-menu .item-container{
 
 /* -----------------------------------------------------------------------------
 
-# --- BODY addProd   ----
+# --- BODY addProd / DisplayProd   ----
 
 ----------------------------------------------------------------------------- */
 
@@ -3135,6 +3142,14 @@ body.body-addProd h4{
   color: #fff;
   margin: 0;
   margin-top: 50px;
+}
+
+.Display-Prod h1 {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  color: #F28123;
+  font-size: 30px;
+  /* padding: 20px 0 20px 0; */
 }
 
 /* -----------------------------------------------------------------------------
