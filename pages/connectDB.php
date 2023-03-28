@@ -96,6 +96,16 @@ class DB_conn
         return $str;
     }
 
+    /* ------------------------------------------------------------------------
+
+    # Product Max
+
+    --------------------------------------------------------------------*/
+    public function select_product($id)
+    {
+        $str = mysqli_query($this->conn, "SELECT * FROM shop_prod WHERE prod_id = $id");
+        return $str;
+    }
 
     /* -----------------------------------------------------------------------------
 

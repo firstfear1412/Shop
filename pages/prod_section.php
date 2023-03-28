@@ -42,52 +42,47 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
 <!-- product section -->
 <div class="product-section mt-150 mb-150">
- 
-    <div class="container">
-      <div class="row flex-row">
-        
+
+  <div class="container">
+    <div class="row flex-row">
+
+
+      <?php
+      $sql = $conn->display_prod();
+      while ($data = mysqli_fetch_array($sql)) {
+      ?>
+
 
         <?php
-        $sql = $conn->display_prod();
-        while ($data = mysqli_fetch_array($sql)) {
+        $str = $data['prod_img'];
+        $pathImg = substr($str, 9); //นับเเต่ตัวที่9
+
+        $parentPathImg  = '/Shop/p_img/' . $pathImg;
+        $parentPath  = '/Shop/pages/';
+        $parentPath2  = '/Shop/';
+
         ?>
+        <div class="col-lg-4 col-md-6 text-center">
+          <div class="single-product-item">
+            <a href="<?php echo $parentPath ?>single-product.php?q=<?php echo base64_encode($data['prod_id']); ?>">
+              <img src="<?php echo "$parentPathImg " ?>" alt="" /></a>
+            <h3>
+              <?php echo $data['prod_name'] ?>
+            </h3>
+            <p class="product-price"><span>Per Kg</span>
+              <?php echo $data['prod_price'] . "฿" ?>
+            </p>
+            <!-- ค่าที่ส่ง p_id,act=add,qty=1 -->
+            <a href="<?php echo $parentPath ?>cart.php?p_id=<?php echo $data['prod_id'] ?>&act=add&qty=1" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
 
-
-          <?php
-          $str = $data['prod_img'];
-          $pathImg = substr($str, 9); //นับเเต่ตัวที่9
-
-          $parentPathImg  = '/Shop/p_img/'.$pathImg;
-          $parentPath  = '/Shop/pages/';
-          $parentPath2  = '/Shop/';
-
-          ?>
-          <div class="col-lg-4 col-md-6 text-center">
-            <div class="single-product-item">
-              
-
-              <a href="<?php echo $parentPath ?>single-product.php?q=<?php echo base64_encode($data['prod_id']); ?>">
-
-                <img src="<?php echo "$parentPathImg " ?>" alt="" /></a> 
-              <h3>
-                <?php echo $data['prod_name'] ?>
-              </h3>
-              <p class="product-price"><span>Per Kg</span>
-                <?php echo $data['prod_price'] . "฿" ?>
-              </p>
-              <a href="<?php echo $parentPath2 ?>cart.html" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a>
-
-
-              <!-- <a href="pages/cart3.php?p_id=<?php echo $data['prod_id'] ?>&act=add" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a> -->
-              <!-- <a href="pages/cart.php?q=<?php echo base64_encode($data['prod_id']); ?>" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</a> -->
-            </div>
           </div>
-        <?php
-        }
-        ?>
-      </div>
+        </div>
+      <?php
+      }
+      ?>
     </div>
- 
+  </div>
+
 </div>
 <!-- end product section -->
 

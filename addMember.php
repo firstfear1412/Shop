@@ -48,7 +48,7 @@
     <!-- Header-->
 
     <!-- Form สำหรับ สมัครสมาชิก -->
-    <div class="register-form">
+    <div class="register-form animated fadeInDown" style="animation-delay: 0.5s;">
         <h1>Register member</h1>
         <form action="member.php" method="post">
           <input type="text" id="name" name="name" placeholder="Your firstname and lastname" required="required"/>
@@ -57,7 +57,7 @@
           <input type="password" id="password" name="password" placeholder="Your Password" required="required"/>
           <textarea name="address" id="address" cols="10" rows="20" placeholder="Your address"></textarea>
             <div class="text-center">
-                <input type="submit">
+                <input type="submit" value="SIGN UP">
             </div>
         </form>
     </div>

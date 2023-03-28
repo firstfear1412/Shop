@@ -43,7 +43,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
 
 
-  <body>
+  <body class= "body-addProd">
     <!--PreLoader-->
     <div class="loader">
       <div class="loader-inner">
@@ -86,8 +86,8 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="breadcrumb-text">
-              <p>Admin</p>
-              <h1>Add Product</h1>
+              <p>ADMIN PANEL</p>
+              <h4>Add Product</h4>
             </div>
           </div>
         </div>
@@ -95,100 +95,53 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
     </div>
     <!-- end breadcrumb section -->
 
-    <!-- displayProd -->
-    
 
-    <div class="cart-section mt-150 mb-150">
-      <div class="container">
-        <div class="row justify-content-center " >
-          <div class="col-lg-8 col-md-12">
-            <div class="cart-table-wrap">
-              <table class="cart-table">
-                <thead class="cart-table-head">
-                  <tr class="table-head-row">
-                    <!-- <th class="product-remove"></th> -->
-                    <th class="product-image">Product Image</th>
-                    <th class="product-name">Name</th>
-                    <th class="product-price">Price</th>
-                    <th class="product-Detail">Detail</th>
-                    <th class="product-Prod_id">Prod_id</th>
-                  </tr>
-                </thead>
-                <tbody >
-
-                <?php
-                        $sql = $conn->display_prod();
-                        $i = 1;
-                        while ($data = mysqli_fetch_array($sql)) {
-                            // echo $data['first_name']; 
-                            ?>
-                            <tr>
-                                <td class="product-image"> 
-                                <img src= <?php echo $data['prod_img'] ?> alt="" />
-                              </td>
-                                
-                                <td class="product-name"> <?php echo $data['prod_name'] ?> </td>
-                                <td class="product-price"> <?php echo $data['prod_price'] ?> </td>
-                                <td class="product-Detail"> <?php echo $data['prod_detail'] ?> </td>
-                                
-                                <td class="product-Prod_id"> <?php echo $data['prod_id'] ?> </td>
-        
-                            </tr>
-                            <?php $i = $i + 1;  ?>
-                            <?php
-                        }
-                        // ?>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          </div>
-          </div>
-          </div>
-
-          
-
-
-    <!-- end displayProd -->
 
     <!-- addProd -->
      <div class="container">
-                            <h3 class="mt-5">เพื่มข้อมูลสินค้า</h3>
-
+                            <h1>Add Product</h1>
                             <form method="POST" action="insert_product.php"enctype="multipart/form-data">
                                           <div class="mb-3">
-                                                        <label class="form-label">Name :</label>
-                                                        <input type="text" class="form-control" id="name" name="name">
+                                                        <h2><label class="form-label">Product Name :</label><h2>
+                                                        <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อสินค้า">
                                           </div>
                                           <div class="mb-3">
-                                                        <label class="form-label">Detail :</label>
-                                                        <input type="text" class="form-control" id="detail"
-                                                                      name="detail">
+                                                        <h2><label class="form-label">Detail :</label><h2>
+                                                        <!-- <input type="text" class="form-control" id="detail" name="detail"> -->
+                                                        <textarea class="form-control" name="detail" id="detail" cols="auto" rows="auto" placeholder="รายละเอียด"></textarea>
                                           </div>
                                           <div class="mb-3">
-                                                        <label class="form-label">Price : </label>
-                                                        <input type="text" class="form-control" id="price" name="price">
+                                                        <h2><label class="form-label">Price : </label><h2>
+                                                        <input type="text" class="form-control" id="price" name="price" placeholder="ราคาสินค้า">
                                           </div>
+                                          
                                           <div class="mb-3">
-                                                        <label class="form-label">รูปภาพสินค้า</label>
-                                                        <input type="file" class="form-control" id="picture"
-                                                                      name="picture">
+                                                        <h2><label class="form-label">Picture : </label><h2>
+                                                        <input type="file"  class="form-control" id="picture"name="picture" >
 
                                                                       
                                           </div>
-                                      
-                                          <button type="submit" class="btn btn-primary" id="submit"
-                                                        name="submit">บันทึกข้อมูลสินค้า </button>
 
-                                                        
-                                              
-                            </form>
-              </div>
+                                          </div>
+
+                                          
+                                        
+                                          <br></br>
+
+                                          <div class="text-center"><input type="submit" value="   S A V E   "></form>
+                                          <a href="/Shop/pages/displayProd.php">
+                                          <?Php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'?>
+                                          <input type="submit" value=" Display Product "></a>
+                                          </div>
+                                        
+
+                                        <br></br><br></br><br></br><br></br> 
+                                                
+     
 
 
     <!-- end addProd -->
-
-
+ 
     <?php
     include_once("footer.php");
     ?>
@@ -221,7 +174,3 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
   </body>
 </html>
-
-  
-
-  

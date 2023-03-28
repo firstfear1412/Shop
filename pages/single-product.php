@@ -1,7 +1,11 @@
-<!-- <?php
-      include_once("connectDB.php");
-      $conn = new DB_conn; //สร้าง object ชื่อ $condb
-      ?> -->
+<?php
+include_once("connectDB.php");
+$conn = new DB_conn; //สร้าง object ชื่อ $condb
+// fix path 
+$parentPath = '/Shop';
+$parentPath2 = '/Shop/pages';
+$qty = 1;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -125,6 +129,7 @@
               <img src="<?php echo "$p_img" ?>" alt="" />
             </td>
 
+
           </div>
         </div>
         <div class="col-md-7">
@@ -135,14 +140,20 @@
               <?php echo $p_detail ?>
             </p>
             <div class="single-product-form">
-              <form action="index.html">
-                <input type="number" placeholder="0" />
+
+              <form id="addToCartForm" method="POST" action="<?php echo $parentPath2 ?>/cart.php">
+                <input type="hidden" name="p_id" value="<?php echo $id ?>" />
+                <input type="hidden" name="act" value="add" />
+                <input type="number" name="qty" value="1" />
+                <br></br>
+
+                <!-- ส่งไปเมื่อกด button นี้ -->
+                <button type="submit" class="cart-btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+
+
               </form>
-
-              <a href="<?php echo $parentPath2 ?>/cart.php?q=<?php echo base64_encode($id); ?>" class="cart-btn">
-                <i class="fas fa-shopping-cart"></i> Add to Cart</a>
-
             </div>
+
             <h4>Share:</h4>
             <ul class="product-share">
               <li>
@@ -195,51 +206,47 @@
       include_once("prod_section.php");
       ?>
 
-      
-  <!-- end product section -->
 
-
-
-  <?php
-  // fix path 
-  $parentPath = '/Shop';
-  $parentPath2 = '/Shop/pages'
-  ?>
-
-
-
-
-  <!-- footer -->
-  <?php
-  include_once("footer.php");
-  ?>
-
-  <!-- end footer -->
+      <!-- end product section -->
 
 
 
 
 
-  <!-- jquery -->
-  <script src="../assets/js/jquery-1.11.3.min.js"></script>
-  <!-- bootstrap -->
-  <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
-  <!-- count down -->
-  <script src="../assets/js/jquery.countdown.js"></script>
-  <!-- isotope -->
-  <script src="../assets/js/jquery.isotope-3.0.6.min.js"></script>
-  <!-- waypoints -->
-  <script src="../assets/js/waypoints.js"></script>
-  <!-- owl carousel -->
-  <script src="../assets/js/owl.carousel.min.js"></script>
-  <!-- magnific popup -->
-  <script src="../assets/js/jquery.magnific-popup.min.js"></script>
-  <!-- mean menu -->
-  <script src="../assets/js/jquery.meanmenu.min.js"></script>
-  <!-- sticker js -->
-  <script src="../assets/js/sticker.js"></script>
-  <!-- main js -->
-  <script src="../assets/js/main.js"></script>
+
+
+
+      <!-- footer -->
+      <?php
+      include_once("footer.php");
+      ?>
+
+      <!-- end footer -->
+
+
+
+
+
+      <!-- jquery -->
+      <script src="../assets/js/jquery-1.11.3.min.js"></script>
+      <!-- bootstrap -->
+      <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+      <!-- count down -->
+      <script src="../assets/js/jquery.countdown.js"></script>
+      <!-- isotope -->
+      <script src="../assets/js/jquery.isotope-3.0.6.min.js"></script>
+      <!-- waypoints -->
+      <script src="../assets/js/waypoints.js"></script>
+      <!-- owl carousel -->
+      <script src="../assets/js/owl.carousel.min.js"></script>
+      <!-- magnific popup -->
+      <script src="../assets/js/jquery.magnific-popup.min.js"></script>
+      <!-- mean menu -->
+      <script src="../assets/js/jquery.meanmenu.min.js"></script>
+      <!-- sticker js -->
+      <script src="../assets/js/sticker.js"></script>
+      <!-- main js -->
+      <script src="../assets/js/main.js"></script>
 
 
 </body>

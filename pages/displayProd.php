@@ -47,9 +47,17 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
               <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
               <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"> -->
 
+
+
+
 </head>
 
+
+
 <body>
+
+
+
     <!--PreLoader-->
     <div class="loader">
       <div class="loader-inner">
@@ -63,22 +71,50 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
     include_once("header.php")
     ?> 
     <!-- end header -->
+    <!-- hero area -->
+	<div class="hero-area hero-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-9 offset-lg-2 text-center">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+
+            
+
+							<p class="subtitle">ADMIN PANEL</p>
+							<h1>Display Product</h1>
+              
+							<!-- <div class="hero-btns">
+								<a href="addProd.php" class="boxed-btn">Add Product</a>
+								<a href="admin-panel.php" class="bordered-btn">Admin</a>
+							</div> -->
+
+             
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end hero area -->
 
 
        <!-- breadcrumb-section -->
-       <div class="breadcrumb-section breadcrumb-bg">
+       <!-- <div class="breadcrumb-section breadcrumb-bg">
       <div class="container">
         <div class="row">
           <div class="col-lg-8 offset-lg-2 text-center">
             <div class="breadcrumb-text">
-              <p>Admin</p>
+              <p>ADMIN PANEL</p>
               <h1>Display Product</h1>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- end breadcrumb section -->
+
 
     <!-- displayProd -->
     
@@ -87,6 +123,21 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
       <div class="container">
         <div class="row justify-content-center " >
           <div class="col-lg-8 col-md-12">
+            
+          <div class="text-center">
+          <div class="DispayProd" >
+          <h1>PRODUCT LIST</h1>
+          </div>
+          </div>
+            
+          <!-- <div class="text-center">
+          <a href="<?php echo '/Shop/pages/' ?>addProd.php" class="cart-btn"><i class='bx bxs-book-add bx-sm'></i>ADD PRODUCT</a>
+          <a href="<?php echo '/Shop/pages/' ?>admin-panel.php" class="cart-btn">ADMIN PANEL</a>
+          </div> -->
+
+          <!-- <a href="admin-panel.php" class="bordered-btn">ADMIN</a> -->
+
+          <br></br>
             <div class="cart-table-wrap">
               <table class="cart-table">
                 <thead class="cart-table-head">
@@ -113,7 +164,9 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
                         while ($data = mysqli_fetch_array($sql)) {
                             // echo $data['first_name']; 
                             ?>
+                            
                             <tr>
+                            
 
                              
 
@@ -132,35 +185,39 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
                                 <td class="product-del"><a href="del_Prod.php?id=<?php echo $data['prod_id'] ?>"
                                 onclick="return confirm('คุณต้องการลบข้อมูลใช่หรือไม่')">       
                                 <i class="bx bx-x-circle bx-md"></i></a></td>
-        
+                            
                             </tr>
+                            
+
                             <?php $i = $i + 1;  ?>
                             <?php
                         }
                         // ?>
-
-
-
-
                 </tbody>
               </table>
             </div>
-          </div>
-          </div>
-          </div>
-          </div>
+
+          <br></br>
+          <div class="text-center">
 
           
+          <a href="<?php echo '/Shop/pages/' ?>addProd.php" class="cart-btn"><i class='bx bx-add-to-queue bx-sm'></i>Add Product</a>
+          <?Php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'?>
+          <a href="<?php echo '/Shop/pages/' ?>admin-panel.php" class="cart-btn">Admin PANEL</a>
+          </div>
 
+          </div>
+          </div>
+          </div>
+          </div>
 
+      
     <!-- end displayProd -->
 
 
     <?php
     include_once("footer.php");
     ?>
-
-
 
 
 
@@ -188,6 +245,3 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
   </body>
 </html>
-
-
-
