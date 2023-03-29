@@ -1,65 +1,51 @@
 <?php
+//test
 error_reporting(error_reporting() & ~E_NOTICE);
 session_start();
-if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'])) {
-    $p_id = $_REQUEST['p_id'];
-	$act = $_REQUEST['act'];
-	$qty = $_REQUEST['qty'];
-	if ($act == 'add' && !empty($p_id)) {
-		if (!isset($_SESSION['shopping_cart'])) {
-	
-			$_SESSION['shopping_cart'] = array();
-		} else {
-		}
-		if (isset($_SESSION['shopping_cart'][$p_id])) {
-	
-			$_SESSION['shopping_cart'][$p_id] += $qty;
-		} else {
-	
-			$_SESSION['shopping_cart'][$p_id] = $qty;
+if (isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'])) {
+
+	if (isset($_REQUEST['p_id'])) {
+		$p_id = $_REQUEST['p_id'];
+		$act = $_REQUEST['act'];
+		$qty = $_REQUEST['qty'];
+		if ($act == 'add' && !empty($p_id)) {
+			if (!isset($_SESSION['shopping_cart'])) {
+
+				$_SESSION['shopping_cart'] = array();
+			} else {
+			}
+			if (isset($_SESSION['shopping_cart'][$p_id])) {
+
+				$_SESSION['shopping_cart'][$p_id] += $qty;
+			} else {
+
+				$_SESSION['shopping_cart'][$p_id] = $qty;
+			}
 		}
 	}
-	
-	if ($act == 'remove' && !empty($p_id))  //ยกเลิกการสั่งซื้อ
+
+	if ($_REQUEST['act'] == 'remove' && !empty($p_id))  //ยกเลิกการสั่งซื้อ
 	{
 		unset($_SESSION['shopping_cart'][$p_id]);
 	}
-	
-	if ($act == 'update' ) {
-	
-		// $amount_array = $_POST['amount'];
-		// foreach ($amount_array as $p_id => $amount) {
-		// 	$_SESSION['shopping_cart'][$p_id] = $amount;
-		// 	echo "<script>window.location='../index.php'</script>";
-		// }
-	
-	
-	
-		 if (isset($_POST["amount"]) && $_POST["amount"] == true) {
-				$amount_array = $_POST['amount'];
-				foreach ($amount_array as $p_id => $amount) {
-				$_SESSION['shopping_cart'][$p_id] = $amount;
-				echo "<script>window.location='../index.php'</script>";
-		}
-		} else {
-			
-			echo "<script>window.location='../index.php'</script>";
-		}
-	
-	if ($act == 'clear' && !empty($p_id)) {
-	
+	if ($_REQUEST['act'] == 'clear') {
+
 		unset($_SESSION['shopping_cart']);
 	}
+
+
+	if ($_REQUEST['act'] == 'update') {
+		if (isset($_POST["amount"]) && $_POST["amount"] == true) {
+			$amount_array = $_POST['amount'];
+			foreach ($amount_array as $p_id => $amount) {
+				$_SESSION['shopping_cart'][$p_id] = $amount;
+			}
+		}
+		echo "<script>window.location='../index.php'</script>";
 	}
-	
-	
-	
-	
-
 } else {
-    $p_id = 0;
+	$p_id = 0;
 	$qty = 0;
-
 }
 // $p_id = $_REQUEST['p_id'];
 // $act = $_REQUEST['act'];
@@ -68,7 +54,16 @@ if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty']
 
 
 
-
+if (isset($_SESSION['shopping_cart'])) {
+	$sizearr = sizeof($_SESSION['shopping_cart']);
+	echo "<script>const numProducts = $sizearr;</script>";
+	echo "IF";
+}
+// else{
+// 	$sizearr = sizeof($_SESSION['shopping_cart']);
+// 	echo "<script>const numProducts = $sizearr;</script>";
+// 	echo "ELSE";
+// }
 
 
 
@@ -112,7 +107,12 @@ if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty']
 
 <body>
 
-	<?php include_once('header.php'); ?>
+	<?php include_once('header.php');
+	// print_r($_SESSION['shopping_cart']);
+	?>
+
+
+
 
 	<!-- breadcrumb-section -->
 	<div class="breadcrumb-section breadcrumb-bg">
@@ -151,18 +151,16 @@ if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty']
 
 
 							</thead>
-
-							<form id="frmcart" name="frmcart" method="post" action="?p_id=0&qty=0&act=update">
+							<form id="frmcart" name="frmcart" method="post" action="?act=update">
 
 								<tbody>
 									<?php
 
-									$sizearr = sizeof($_SESSION['shopping_cart']);
-									echo "<script>const numProducts = $sizearr;</script>";
+									// $sizearr = sizeof($_SESSION['shopping_cart']);
+									// echo "<script>const numProducts = $sizearr;</script>";
 									?>
 
 									<?php
-									$numProducts = $sizearr;
 									include_once("connectDB.php");
 									$conn = new DB_conn; //สร้าง object ชื่อ $condb
 									$parentPath = '/Shop';
@@ -186,10 +184,10 @@ if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty']
 													$sum = $data['prod_price'] * $p_qty;
 													$total += $sum;
 
-													$sumship = 45;
-													$totalsumship = $total + $sumship;
+													$shipping = 45;
+													$totalsumship = $total + $shipping;
 
-													echo "<script>const sumshipJS = $sumship;</script>";
+													echo "<script>const sumshipJS = $shipping;</script>";
 										?>
 
 
@@ -305,58 +303,60 @@ if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty']
 
 								</tr>
 								<tr class="total-data">
-									<td><strong>Shipping: </strong></td>
+									<td><strong>Shopping: </strong></td>
 									<td>
-										<!-- <?php echo '<p><span id="sumship" value="' . number_format($sumship, 2) . '">' . number_format($sumship, 2) . '</span></p>'; ?> -->
-
-
 										<?php
-										if (isset($sumship) && $sumship == true) {
-											echo '<p><span id="sumships" value="' . number_format($sumship, 2) . '">' . number_format($sumship, 2) . '</span></p>';
+										if (isset($shipping) && $shipping == true) {
+											echo '<p><span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
 										} else {
-											$sumship = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumship
-											echo '<p><span id="sumships" value="' . number_format($sumship, 2) . '">' . number_format($sumship, 2) . '</span></p>';
+											$shipping = 0; // กำหนดค่าเริ่มต้นให้กับ $shipping
+											echo '<p><span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
 										}
 										?>
-
-
-
-
 									</td>
 								</tr>
 								<tr class="total-data">
 									<td><strong>Total: </strong></td>
 									<td>
 
-									<?php
-										if (isset($total) && $total == true) {
-											echo '<p><span id="sumship" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+										<?php
+										if (isset($totalsumship) && $totalsumship == true) {
+											echo '<p><span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
 										} else {
-											$total = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumship
-											echo '<p><span id="sumship" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+											$totalsumship = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumshipsumship
+											echo '<p><span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
 										}
 										?>
-									
-								
-										
-					
-
 									</td>
 								</tr>
 							</tbody>
 						</table>
 
-
-						<div class="cart-buttons">
-							<button name="ex" id="ex">Shipping</button>
+							<button class="cart-btn">Shopping</button>
 							</form>
-
+								<form id="order" name="order" method="post" action="insert_order.php?">
+										<button name="ex" id="ex" class="cart-btn margin-bottom">Check Out </button>
+								</form>
 							<div class="cart-buttons">
-								<a href="checkout.html" class="boxed-btn black">Check Out</a>
-								<a href="cart.php?&act=clear" class="boxed-btn black"> Clear</a>
+								<a href="checkout.html" class="boxed-btn black">Check Out html</a>
+								<a href="cart.php?act=clear" class="boxed-btn black"> Clear</a>
 							</div>
 
-						</div>
+
+						<!-- <div class="cart-buttons">
+							<button class="boxed-btn black">Shopping</button>
+							</form>
+							<form id="order" name="order" method="post" action="insert_order.php?">
+								<div class="cart-buttons">
+									<button name="ex" id="ex" class="boxed-btn black">Check Out </button>
+								</div>
+							</form>
+							<div class="cart-buttons">
+								<a href="checkout.html" class="boxed-btn black">Check Out html</a>
+								<a href="cart.php?act=clear" class="boxed-btn black"> Clear</a>
+							</div>
+
+						</div> -->
 
 
 
@@ -370,7 +370,10 @@ if(isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty']
 
 
 </body>
-
+<br><br>
+<?php
+include_once('footer.php')
+?>
 
 
 </html>

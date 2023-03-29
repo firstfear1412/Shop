@@ -3259,7 +3259,6 @@ button.cart-btn:hover {
 
 button.cart-btn {
   font-family: "Poppins", sans-serif;
-
   background-color: #F28123;
   color: #fff;
   padding: 10px 20px;
@@ -3267,5 +3266,7 @@ button.cart-btn {
   border: none;
   cursor: pointer;
   font-size: 16px;
-
+}
+button.margin-bottom {
+  margin-top: 10px;
 }

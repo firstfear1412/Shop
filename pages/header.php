@@ -78,17 +78,15 @@ session_start(); // เริ่มต้น session
               <li>
                 <a href="#">Pages</a>
                 <ul class="sub-menu">
-                  <li><?php echo "<a href='$parentPath/404.html'>404 page</a>"; ?></li>
+                  <li><?php echo "<a href='$parentPath/404.php'>404 page</a>"; ?></li>
                   <li><?php echo "<a href='$parentPath/about.html'>About</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath/cart.html'>Cart</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath/checkout.html'>Check Out</a>"; ?></li>
+                  <li><?php echo "<a href='$parentPath2/cart.php'>Cart</a>"; ?></li>
+                  <li><?php echo "<a href='$parentPath/checkout.php'>Check Out</a>"; ?></li>
                   <li><?php echo "<a href='$parentPath/contact.html'>Contact</a>"; ?></li>
                   <!-- <li><a href="news.html">News</a></li> -->
                   <li><?php echo "<a href='$parentPath/shop.php'>Shop</a>"; ?></li>
                   <li><?php echo "<a href='$parentPath2/displayMember.php'>DisplayMember</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/displayProd.php'>DisplayProd</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/prod_sectionMax.php'>prod_sectionMax</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/singleproductmax.php'>singleproductMax</a>"; ?></li>
+                  <li><?php echo "<a href='$parentPath2/displayProd.php'>DisplayProd</a>"; ?></li> 
                 </ul>
               </li>
               <!-- <li>
@@ -102,8 +100,8 @@ session_start(); // เริ่มต้น session
               <li>
                 <a href="shop.html">Shop</a>
                 <ul class="sub-menu">
-                  <li><?php echo "<a href='$parentPath/shop.html'>Shop</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath/checkout.html'>Check Out</a>"; ?></li>
+                  <li><?php echo "<a href='$parentPath/shop.php'>Shop</a>"; ?></li>
+                  <li><?php echo "<a href='$parentPath2/checkout.php'>Check Out</a>"; ?></li>
                   <li><?php echo "<a href='$parentPath2/single-product.php'>Single Product</a>"; ?></li>
                   <li><?php echo "<a href='$parentPath2/cart.php'>Cart</a>"; ?></li>
                 </ul>
