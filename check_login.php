@@ -23,12 +23,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $address = $row["address"];
 
         $_SESSION['loggedin'] = true; // กำหนดค่าใน session
+        $_SESSION['member_id'] = $member_id;
         $_SESSION['username'] = $username;
-        
+        $_SESSION['name'] = $name;
+        $_SESSION['email'] = $email;
+        $_SESSION['address'] = $address;
+
         if($username == 'admin'){
             echo "<script>alert('Hi ! Welcome back, " . $username . "!')</script>";
             echo "<script>window.location.href='pages/admin-panel.php' </script>";
-            exit;
+            // exit;
         }
         else{
             echo "<script>alert('ล็อกอินสำเร็จ Welcome, " . $username . "!')</script>";
