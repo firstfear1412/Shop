@@ -121,7 +121,33 @@ class DB_conn
             $result = $this->conn->query($sql);
             return $result;
     }
-    
+    /* -----------------------------------------------------------------------------
+
+    # ฟังชั่น order
+
+    ----------------------------------------------------------------------------- */
+    public function insert_order($member_id,$name,$email,$address,$total,$mobile)
+    {
+
+        $sql = "insert into orders(member_id,name,email,address,total_ship,mobile)
+                values('$member_id','$name','$email','$address','$total','$mobile')";
+        return ($sql);
+
+    }
+
+    public function insert_orderProductTest($order_id,$prod_id,$quantity,$sumPerItem)
+    {
+
+        $strSQL="INSERT INTO order_product(order_id,prod_id,quantity,sumPerItem) 
+        VALUES ($order_id,$prod_id,$quantity,$sumPerItem)";
+        return ($strSQL);
+
+        // $sql = "insert into member(name,email,username,password,address)
+        // values('$name','$email','$username','$password','$address')";
+        // return ($sql);
+
+
+    }
 }
 
 ?>

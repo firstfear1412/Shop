@@ -28,7 +28,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['name'] = $name;
         $_SESSION['email'] = $email;
         $_SESSION['address'] = $address;
-
+        echo "======================";
+        print_r($_SESSION['member_id']);
         if($username == 'admin'){
             echo "<script>alert('Hi ! Welcome back, " . $username . "!')</script>";
             echo "<script>window.location.href='pages/admin-panel.php' </script>";

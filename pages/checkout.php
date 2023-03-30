@@ -3,8 +3,10 @@ $parentPath = '/Shop';
 $parentPath2 = '/Shop/pages';
 // $cart=$_SESSION["cart"];
 include_once("header.php");
+
 include_once("connectDB.php");
-$conn = new DB_conn; //สร้าง object ชื่อ $condb
+$conndb = new DB_conn; //สร้าง object ชื่อ $condb
+$con = $conndb->conn;
 
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตรวจสอบสถานะการล็อกอิน
@@ -19,6 +21,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 	$name = "Name";
 	$email = "Email";
 	$address = "Address";
+	$total = 0;
 }
 //สำหรับทดสอบค่า
 // echo "<br>=============================";
@@ -59,6 +62,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 	<link rel="stylesheet" href="assets/css/animate.css">
 	<!-- mean menu css -->
 	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
+	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
 	<!-- main style -->
 	<link rel="stylesheet" href="assets/css/main.css">
 	<!-- responsive -->
@@ -67,6 +71,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 </head>
 
 <body>
+
 
 	<?php
 	include_once('header.php');
@@ -88,6 +93,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 	</div>
 	<!-- end breadcrumb section -->
 
+
 	<!-- check out section -->
 	<div class="checkout-section mt-150 mb-150">
 		<div class="container">
@@ -107,21 +113,12 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 									<div class="card-body">
 										<div class="billing-address-form">
-											<!-- <form action="editMember.php?id=<?php echo $data['member_id'] ?>">
-						        		<p><input type="text" placeholder="<?php echo $data['name'] ?>" disabled></p>
-						        		<p><input type="email" placeholder="Email" disabled></p>
-						        		<p><input type="text" placeholder="<?php echo $data['address'] ?>" disabled></p>
-						        		<p><input type="tel" placeholder="Phone" name = "phone"></p>
-						        		<input type="submit" value="edit"/>
-						        	</form> -->
-											<!-- <form action="editMember.php?id=<?php echo $data['member_id'] ?>"> -->
-											<form action="editMember.php?id=<?php echo $member_id ?>">
-												<p><input type="text" name="name" placeholder="<?php echo $name ?>" disabled></p>
-												<p><input type="email" name="email" placeholder="<?php echo $email ?> " disabled></p>
-												<p><input type="text" name="address" placeholder="<?php echo $address ?>" disabled></p>
-												<p><input type="tel" name="mobile" placeholder="Phone"></p>
+											<form id="userForm" action="addOrder.php">
+												<p><input type="text" id="name" name="name" value="<?php echo $name ?>"></p>
+												<p><input type="email" id="name" name="email" value="<?php echo $email ?> "></p>
+												<p><input type="text" id="name" name="address" value="<?php echo $address ?>"></p>
+												<p><input type="tel" name="mobile" placeholder="Phone" required></p>
 												<p><input type="hidden" name="id" value="<?php echo $member_id ?>"></p>
-												<input type="submit" value="Edit" />
 											</form>
 										</div>
 									</div>
@@ -162,44 +159,154 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 									<td>Product</td>
 									<td>Total</td>
 								</tr>
-								<tr>
-									<td>Strawberry</td>
-									<td>$85.00</td>
-								</tr>
-								<tr>
-									<td>Berry</td>
-									<td>$70.00</td>
-								</tr>
-								<tr>
-									<td>Lemon</td>
-									<td>$35.00</td>
-								</tr>
+
+								<!-- <form action="checkout.php"> -->
+
+								<?php
+
+								// include_once("connectDB.php");
+								// $conn = new DB_conn; //สร้าง object ชื่อ $condb
+
+								// ตรวจสอบว่ามีการส่งค่า $_POST['product_id'] และ $_POST['product_qty'] มาหรือไม่
+
+								if (isset($_POST['product_id']) && isset($_POST['product_qty'])) {
+									$product_ids = $_POST['product_id'];
+									$product_qtys = $_POST['product_qty'];
+									// $total =  $_POST['total'];
+									// $total =0; 
+									// นับจำนวนสินค้าที่ถูกสั่งซื้อ
+									$num_items = count($product_ids);
+
+									// print_r($product_ids);
+									// echo "<br> ================== <br> ";
+									// แสดงรายละเอียดสินค้าที่ถูกสั่งซื้อ
+
+									$total = 0;
+									for ($i = 0; $i < $num_items; $i++) {
+										$product_id = $product_ids[$i];
+										$id =  $product_id;
+										$product_qty = $product_qtys[$i];
+
+										// echo $id;
+										// echo "<br> ================== <br> ";
+										// echo $product_id;
+										// echo "<br> ================== <br> ";
+										$sql = $conndb->select_product($product_id);
+										while ($data = mysqli_fetch_array($sql)) {
+
+											$sum = $data['prod_price'] * $product_qty;
+
+											$total += $sum;
+
+											$shipping = 45;
+											$totalsumship = $total + $shipping;
+
+								?>
+											<tr>
+												<td><?php echo $data['prod_name'] ?></td>
+												<td><?php echo $sum ?></td>
+
+											</tr>
+
+									<?php }
+										$_SESSION['totalPrice'] = $totalsumship;
+									} ?>
+									<!-- </form> -->
+
+
 							</tbody>
+
+
+
+							<!-- ราคารวม -->
 							<tbody class="checkout-details">
 								<tr>
 									<td>Subtotal</td>
-									<td>$190</td>
+									<td>$<?php echo $total ?></td>
 								</tr>
 								<tr>
 									<td>Shipping</td>
-									<td>$50</td>
+									<td>$<?php echo $shipping ?></td>
 								</tr>
 								<tr>
 									<td>Total</td>
-									<td>$240</td>
+									<td>$<?php echo $totalsumship ?></td>
 								</tr>
 							</tbody>
 						</table>
-						<a href="#" class="boxed-btn">Place Order</a>
+
+
+					<?php }
+					?>
+
+					<!-- <a href="#" class="boxed-btn">Place Order</a> -->
+
+					<!-- action="checkout.php" -->
+					<!-- <form action="index.php"> -->
+					<?php
+
+					// include_once("connectDB.php");
+					// $conndb = new DB_conn; //สร้าง object ชื่อ $condb
+					// $con = $conndb->conn;
+
+					// ตรวจสอบว่ามีการส่งค่า $_POST['product_id'] และ $_POST['product_qty'] มาหรือไม่
+
+					// $sql = $conndb->insert_order($member_id, $name, $email, $address, $total);
+					// if (mysqli_query($con, $sql)) {
+					// 	// 	// echo "<script>alert('สมัครสมาชิกสำเร็จ')</script>";
+					// 	// 	// echo "<script>window.location.href='login.php' </script>";
+					// 	// } 
+					// 	// else {
+					// 	// 	echo "<script>alert('เกิดข้อผิดพลาด')</script>";
+					// 	// 	echo "<script>window.location.href='addMember.php' </script>";
+					// }
+					?>
+
+					<button class="cart-btn-b" type="submit" form="userForm">Checkout</button>
+					<!-- </form> -->
+					<?php
+					// $sql = $conn->insert_product($p_name, $p_detail, $p_price, $path_img);
+					?>
+					<style>
+						.button-container-b {
+							display: flex;
+							justify-content: flex-start;
+							gap: 20px;
+						}
+
+						.cart-btn-b {
+							font-family: 'Poppins', sans-serif;
+							display: inline-block;
+							background-color: #F28123;
+							color: #fff;
+							width: 120px;
+							height: 45px;
+							background-color: #F28123;
+							border-radius: 30px;
+							border: none;
+							/* กำหนดขอบเป็น none เพื่อเอาขอบออก */
+						}
+
+						.cart-btn-b:hover {
+							background-color: #051922;
+							color: #F28123;
+						}
+					</style>
+
+
+
 					</div>
 				</div>
+				<!-- <button class="cart-btn-b" type="submit" form="userForm">Checkout</button> -->
+
 			</div>
 		</div>
 	</div>
 	<!-- end check out section -->
-	<?php
-	include_once("footer.php");
-	?>
+
+
+	<!-- <br><br><br> -->
+
 	<!-- jquery -->
 	<script src="assets/js/jquery-1.11.3.min.js"></script>
 	<!-- bootstrap -->
@@ -222,5 +329,10 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 	<script src="assets/js/main.js"></script>
 
 </body>
+<footer>
+	<?php
+	include_once("footer.php");
+	?>
+</footer>
 
 </html>

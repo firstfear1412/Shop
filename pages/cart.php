@@ -8,6 +8,7 @@ if (isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'
 		$p_id = $_REQUEST['p_id'];
 		$act = $_REQUEST['act'];
 		$qty = $_REQUEST['qty'];
+
 		if ($act == 'add' && !empty($p_id)) {
 			if (!isset($_SESSION['shopping_cart'])) {
 
@@ -37,11 +38,13 @@ if (isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'
 	if ($_REQUEST['act'] == 'update') {
 		if (isset($_POST["amount"]) && $_POST["amount"] == true) {
 			$amount_array = $_POST['amount'];
+
+			print_r($amount_array);
 			foreach ($amount_array as $p_id => $amount) {
 				$_SESSION['shopping_cart'][$p_id] = $amount;
 			}
 		}
-		echo "<script>window.location='../index.php'</script>";
+		echo "<script>window.location='cart.php'</script>";
 	}
 } else {
 	$p_id = 0;
@@ -107,8 +110,8 @@ if (isset($_SESSION['shopping_cart'])) {
 
 <body>
 
-	<?php include_once('header.php');
-	// print_r($_SESSION['shopping_cart']);
+	<?php
+	include_once('header.php');
 	?>
 
 
@@ -120,14 +123,15 @@ if (isset($_SESSION['shopping_cart'])) {
 			<div class="row">
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
-						<p>Fresh and Organic</p>
-						<h1>Cart</h1>
+						<p>Detail for shipping</p>
+						<h1>Checkout</h1>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- end breadcrumb section -->
+
 
 
 
@@ -151,7 +155,7 @@ if (isset($_SESSION['shopping_cart'])) {
 
 
 							</thead>
-							<form id="frmcart" name="frmcart" method="post" action="?act=update">
+							<form id="Update Cart" name="Update Cart" method="post" action="?act=update">
 
 								<tbody>
 									<?php
@@ -175,17 +179,25 @@ if (isset($_SESSION['shopping_cart'])) {
 											$total = 0;
 											foreach ($_SESSION['shopping_cart'] as $p_id => $p_qty) {
 
-												// $sum = $row['prod_price'] * $p_qty;
-												// $total += $sum;
+
 												$sql = $conn->select_product($p_id);
 												while ($data = mysqli_fetch_array($sql)) {
 
 
 													$sum = $data['prod_price'] * $p_qty;
 													$total += $sum;
-
 													$shipping = 45;
 													$totalsumship = $total + $shipping;
+
+													// $itemeqty = $p_qty;
+													// $itemePrice = $data['prod_price'];
+													// $itemeSum = $data['prod_price'] * $p_qty;
+													// $_SESSION['sum'][$p_id] = $itemeSum;	
+													// $_SESSION['sum'][$p_id] = array('qty' => $itemeqty, 'sum' => $itemeSum);
+													// foreach ($_SESSION['sum'] as $p_id => $values) {
+													// 	$_SESSION['sum'][$p_id] = $values;
+													// }
+													// print_r($_SESSION['sum']);
 
 													echo "<script>const sumshipJS = $shipping;</script>";
 										?>
@@ -193,7 +205,7 @@ if (isset($_SESSION['shopping_cart'])) {
 
 													<tr class="table-body-row">
 
-														<td class="product-remove"><a href="cart.php?p_id=<?php echo $data['prod_id'] ?>&act=remove&qty"><i class="far fa-window-close"></i></a></td>
+														<td class="product-remove"><a href="cartED.php?p_id=<?php echo $data['prod_id'] ?>&act=remove&qty"><i class="far fa-window-close"></i></a></td>
 														<!-- รูป -->
 														<td class="product-image"><img src="<?php echo $data['prod_img'] ?>" alt=""></td>
 
@@ -213,6 +225,9 @@ if (isset($_SESSION['shopping_cart'])) {
 														</td>
 
 
+
+
+
 													</tr>
 
 												<?php $i++;
@@ -220,6 +235,11 @@ if (isset($_SESSION['shopping_cart'])) {
 
 									</div>
 							<?php }
+											// print_r($arsum);
+											// print_r($_SESSION['sum']);
+											// $_SESSION['sum'] = array();
+											// $_SESSION['sum'] = array();
+
 										} ?>
 
 
@@ -305,6 +325,9 @@ if (isset($_SESSION['shopping_cart'])) {
 								<tr class="total-data">
 									<td><strong>Shopping: </strong></td>
 									<td>
+										<!-- <?php echo '<p><span id="sumship" value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>'; ?> -->
+
+
 										<?php
 										if (isset($shipping) && $shipping == true) {
 											echo '<p><span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
@@ -313,6 +336,10 @@ if (isset($_SESSION['shopping_cart'])) {
 											echo '<p><span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
 										}
 										?>
+
+
+
+
 									</td>
 								</tr>
 								<tr class="total-data">
@@ -327,36 +354,96 @@ if (isset($_SESSION['shopping_cart'])) {
 											echo '<p><span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
 										}
 										?>
+
 									</td>
 								</tr>
 							</tbody>
 						</table>
 
-							<button class="cart-btn">Shopping</button>
-							</form>
-								<form id="order" name="order" method="post" action="insert_order.php?">
-										<button name="ex" id="ex" class="cart-btn margin-bottom">Check Out </button>
+
+						<div class="cart-buttons">
+							<div class="button-container-b">
+
+								<button class="cart-btn-b" id="Update Cart" name="Update Cart">Update Cart</button>
 								</form>
-							<div class="cart-buttons">
-								<a href="checkout.html" class="boxed-btn black">Check Out html</a>
-								<a href="cart.php?act=clear" class="boxed-btn black"> Clear</a>
+
+								<!-- <form id="Checkout" name="Checkout" method="post" action="checkout.php">
+									<?php
+									if (!empty($_SESSION['shopping_cart'])) {
+										$i = 1;
+										foreach ($_SESSION['shopping_cart'] as $p_id => $p_qty) {
+											echo '<input type="hidden" name="product_id[]" value="' . $p_id . '">';
+											echo '<input type="hidden" name="product_qty[]" value="' . $p_qty . '">';
+											$i++;
+										}
+									}
+									?>
+									<button class="cart-btn-b" id="Checkout" name="Checkout">Checkout</button>
+								</form> -->
+								<?php
+								if (!empty($_SESSION['shopping_cart'])) {
+									// code to generate input fields for product ID and quantity
+								?>
+
+									<form id="Checkout" name="Checkout" method="post" action="checkout.php">
+										<?php
+										if (!empty($_SESSION['shopping_cart'])) {
+											$i = 1;
+											foreach ($_SESSION['shopping_cart'] as $p_id => $p_qty) {
+												echo '<input type="hidden" name="product_id[]" value="' . $p_id . '">';
+												echo '<input type="hidden" name="product_qty[]" value="' . $p_qty . '">';
+												$i++;
+											}
+										}
+										?>
+										<button class="cart-btn-b" id="Checkout" name="Checkout">Checkout</button>
+									</form>
+
+								<?php
+								} else {
+									// echo "Your shopping cart is empty.";
+								}
+								?>
 							</div>
 
 
-						<!-- <div class="cart-buttons">
-							<button class="boxed-btn black">Shopping</button>
-							</form>
-							<form id="order" name="order" method="post" action="insert_order.php?">
-								<div class="cart-buttons">
-									<button name="ex" id="ex" class="boxed-btn black">Check Out </button>
-								</div>
-							</form>
-							<div class="cart-buttons">
-								<a href="checkout.html" class="boxed-btn black">Check Out html</a>
-								<a href="cart.php?act=clear" class="boxed-btn black"> Clear</a>
-							</div>
+							<style>
+								.button-container-b {
+									display: flex;
+									justify-content: flex-start;
+									gap: 20px;
+								}
 
-						</div> -->
+								.cart-btn-b {
+									font-family: 'Poppins', sans-serif;
+									display: inline-block;
+									background-color: #F28123;
+									color: #fff;
+									width: 120px;
+									height: 45px;
+									background-color: #F28123;
+									border-radius: 30px;
+									border: none;
+									/* กำหนดขอบเป็น none เพื่อเอาขอบออก */
+								}
+
+								.cart-btn-b:hover {
+									background-color: #051922;
+									color: #F28123;
+								}
+							</style>
+
+
+
+
+
+							<!-- <a href="cart.html" class="boxed-btn">Update Cart</a> -->
+							<!-- <a href="checkout.php" class="boxed-btn black">Check Out</a> -->
+
+
+
+
+						</div>
 
 
 
@@ -370,6 +457,23 @@ if (isset($_SESSION['shopping_cart'])) {
 
 
 </body>
+
+
+
+
+<!-- <form id="Checkout" name="Checkout" method="post" action="checkoutTest.php">
+	<?php
+	if (!empty($_SESSION['sum'])) {
+		foreach ($_SESSION['sum'] as $p_id => $values) {
+			echo '<input type="hidden" name="product_sum[' . $p_id . ']" value="' . $values['sum'] . '">';
+			echo '<input type="hidden" name="product_qty[' . $p_id . ']" value="' . $values['qty'] . '">';
+		}
+	}
+	?>
+	<button class="cart-btn-b" id="Checkout" name="Checkout">Checkout</button> -->
+
+
+
 <br><br>
 <?php
 include_once('footer.php')

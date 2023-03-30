@@ -144,7 +144,7 @@ $qty = 1;
               <form id="addToCartForm" method="POST" action="<?php echo $parentPath2 ?>/cart.php">
                 <input type="hidden" name="p_id" value="<?php echo $id ?>" />
                 <input type="hidden" name="act" value="add" />
-                <input type="number" name="qty" value="1" />
+                <input type="number" name="qty" value="1" min="1" />
                 <br></br>
 
                 <!-- ส่งไปเมื่อกด button นี้ -->
