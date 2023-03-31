@@ -50,9 +50,9 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
     <div class="admin-menu">
     <h2 class="animated fadeInDown ">Tools</h2>
     <div class="item-container">
-        <a href="displayMember.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 1.5s;">Display Member</a>
-        <a href="displayProd.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2s;">Display Product</a>
-        <a href="page3.html" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2.5s;">Box 3</a>
+        <a href="displayMember.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 1.5s;">Member</a>
+        <a href="displayProd.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2s;">Product</a>
+        <a href="dp-order.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2.5s;">Order</a>
     </div>
     </div>
 
