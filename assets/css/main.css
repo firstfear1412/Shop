@@ -1368,7 +1368,7 @@ a.mobile-show.search-bar-icon:hover {
 
 ----------------------------------------------------------------------------- */
 .hero-bg {
-  background-image: url(../img/hero-bg.jpg);
+  background-image: url(../img/maxresdefault.jpg);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -2544,6 +2544,10 @@ ul.product-share li a {
 }
 
 table.cart-table {
+  border: 1px solid #f9f9f9;
+  width: 100%;
+}
+table.Order-table {
   border: 1px solid #f9f9f9;
   width: 100%;
 }
