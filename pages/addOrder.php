@@ -8,9 +8,8 @@ $member_id = $_GET["id"];
 $name = $_GET["name"];
 $email = $_GET["email"];
 $address = $_GET["address"];
-$mobile = $_GET["mobile"];
-
-print_r($mobile);
+$phone = $_GET["phone"];
+print_r($phone);
 print_r($_SESSION['shopping_cart']);
 
 
@@ -40,7 +39,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 $total = $_SESSION['totalPrice'];
 
 
-$sql = $conndb->insert_order($member_id, $name, $email, $address, $total, $mobile);
+$sql = $conndb->insert_order($member_id, $name, $email, $address, $total, $phone);
 if (mysqli_query($server, $sql)) {
     $last_id = mysqli_insert_id($server);
     foreach ($_SESSION['shopping_cart'] as $p_id => $p_qty) {
@@ -50,7 +49,7 @@ if (mysqli_query($server, $sql)) {
         while ($data = mysqli_fetch_array($sqlSelectProduct)) {
             $sumPerItem = $data['prod_price'] * $quantity;
         }
-        $sql = $conndb->insert_orderProduct($last_id,$prod_id,$quantity,$sumPerItem);
+        $sql = $conndb->insert_orderProductTest($last_id,$prod_id,$quantity,$sumPerItem);
         mysqli_query($server, $sql);
 
     $_SESSION['shopping_cart'] = array();

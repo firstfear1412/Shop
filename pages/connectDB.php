@@ -17,16 +17,12 @@ class DB_conn
         if ($this->conn === false) {
             // if($conn === false){
             die("ERROR: Could not connect." . mysqli_connect_error());
-        } else {
-            echo "Connect Success!!!";
         }
         // $this->conn = $conn;
     }
-    
+
     /* -----------------------------------------------------------------------------
-
     # ฟังชั่น Member
-
     ----------------------------------------------------------------------------- */
     function insert_member($name, $email, $username, $password, $address)
     {
@@ -58,9 +54,7 @@ class DB_conn
     }
 
     /* -----------------------------------------------------------------------------
-
     # ฟังชั่น Product
-
     ----------------------------------------------------------------------------- */
     public function insert_product($p_name, $p_detail, $p_price, $path_img)
     {
@@ -97,9 +91,7 @@ class DB_conn
     }
 
     /* ------------------------------------------------------------------------
-
     # Product Max
-
     --------------------------------------------------------------------*/
     public function select_product($id)
     {
@@ -108,37 +100,33 @@ class DB_conn
     }
 
     /* -----------------------------------------------------------------------------
-
     # ฟังชั่น Login
-
     ----------------------------------------------------------------------------- */
-    public function check_login($username,$password)
+    public function check_login($username, $password)
     {
-            // Get username and password from form
-        
-            // Prepare SQL statement to retrieve member details
-            $sql = "SELECT * FROM member WHERE username = '$username' AND password = '$password'";
-            $result = $this->conn->query($sql);
-            return $result;
+        // Get username and password from form
+
+        // Prepare SQL statement to retrieve member details
+        $sql = "SELECT * FROM member WHERE username = '$username' AND password = '$password'";
+        $result = $this->conn->query($sql);
+        return $result;
     }
     /* -----------------------------------------------------------------------------
-
     # ฟังชั่น order
-
     ----------------------------------------------------------------------------- */
-    public function insert_order($member_id,$name,$email,$address,$total,$mobile)
+    public function insert_order($member_id, $name, $email, $address, $total, $phone)
     {
 
-        $sql = "insert into orders(member_id,name,email,address,total_ship,mobile)
-                values('$member_id','$name','$email','$address','$total','$mobile')";
+        $sql = "insert into orders(member_id,name,email,address,total_ship,phone)
+                values('$member_id','$name','$email','$address','$total','$phone')";
         return ($sql);
 
     }
 
-    public function insert_orderProduct($order_id,$prod_id,$quantity,$sumPerItem)
+    public function insert_orderProductTest($order_id, $prod_id, $quantity, $sumPerItem)
     {
 
-        $strSQL="INSERT INTO order_product(order_id,prod_id,quantity,sumPerItem) 
+        $strSQL = "INSERT INTO order_product(order_id,prod_id,quantity,sumPerItem) 
         VALUES ($order_id,$prod_id,$quantity,$sumPerItem)";
         return ($strSQL);
 
@@ -148,6 +136,33 @@ class DB_conn
 
 
     }
+    public function display_order()
+    {
+        $str = mysqli_query($this->conn, "SELECT * FROM orders");
+        return $str;
+    }
+    public function chosen_order($id)
+    {
+        $str = mysqli_query($this->conn, "SELECT * from orders where order_id = $id");
+        return $str;
+    }
+    public function edit_order_admin($status)
+    {
+        $str = mysqli_query($this->conn, "UPDATE orders SET status = '$status'");
+        return $str;
+    }
+    public function edit_order($order_id, $member_id, $phone, $name, $email, $address, $status)
+    {
+        $str = mysqli_query($this->conn, "UPDATE orders SET name = '$name', member_id = '$member_id' , phone = '$phone',email = '$email',address = '$address',status = '$status' WHERE order_id = '$order_id' ");
+        return $str;
+    }
+    public function del_order($id)
+    {
+        $str = mysqli_query($this->conn, "DELETE FROM orders WHERE order_id = $id ");
+        return $str;
+    }
+
 }
+
 
 ?>
