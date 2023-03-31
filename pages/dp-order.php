@@ -17,7 +17,9 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 <html lang="en">
 <html>
 
-
+<head>
+  <title>Display Products</title>
+</head>
 
 <body>
   <!--PreLoader-->
@@ -66,46 +68,52 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
       </thead>
       <?php
       $sql = $conn->display_order();
-        while ($data = mysqli_fetch_array($sql)) {
-          // echo $data['first_name']; 
-          ?>
-          <tbody class="align-middle">
-            <tr>
-              <td class="row-text">
-                <?php echo $data['order_id'] ?>
-              </td>
-              <td class="row-text">
-                <?php echo $data['name'] ?>
-              </td>
-              <td class="row-text">
-                <?php echo $data['member_id'] ?>
-              </td>
-              <td class="row-email">
-                <?php echo $data['email'] ?>
-              </td>
-              <td class="row-text">
-                <?php echo $data['address'] ?>
-              </td>
-              <td class="row-text">
-                <?php echo $data['phone'] ?>
-              </td>
-              <td class="row-text">
-                <?php echo $data['status'] ?>
-              </td>
-              <td class="member-edit"><a href="editOrder.php?id=<?php echo $data['order_id'] ?>"><i
-                    class="bx bx-edit bx-md"></i></a></td>
-              <td class="member-del"><a href="delOrder.php?id=<?php echo $data['order_id'] ?>" class="btn btn-sm btnprimary"
-                  onclick="return confirm('คุณต้องการลบข้อมูลใช่หรือไม่')"><i class="bx bx-x-circle bx-md"></i></a></td>
+      while ($data = mysqli_fetch_array($sql)) {
+        // echo $data['first_name']; 
+        ?>
+        <tbody class="align-middle">
+          <tr>
+            <td class="row-text">
+              <?php echo $data['order_id'] ?>
+            </td>
+            <td class="row-text">
+              <?php echo $data['name'] ?>
+            </td>
+            <td class="row-text">
+              <?php echo $data['member_id'] ?>
+            </td>
+            <td class="row-email">
+              <?php echo $data['email'] ?>
+            </td>
+            <td class="row-text">
+              <?php echo $data['address'] ?>
+            </td>
+            <td class="row-text">
+              <?php echo $data['phone'] ?>
+            </td>
+            <td class="row-text">
+              <?php echo $data['status'] ?>
+            </td>
+            <td class="member-edit"><a href="editOrder.php?id=<?php echo $data['order_id'] ?>"><i
+                  class="bx bx-edit bx-md"></i></a></td>
+            <td class="member-del"><a href="delOrder.php?id=<?php echo $data['order_id'] ?>" class="btn btn-sm btnprimary"
+                onclick="return confirm('คุณต้องการลบข้อมูลใช่หรือไม่')"><i class="bx bx-x-circle bx-md"></i></a></td>
 
-        </tr>
-      </tbody>
-              <?php
-        }
+          </tr>
+        </tbody>
+        <?php
+      }
       ?>
     </div>
-  </table>
-  <!-- end new Display -->
 
+  </table>
+  <div class="text-center">
+    <?Php echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;' ?>
+    <a href="<?php echo '/Shop/pages/' ?>admin-panel.php" class="cart-btn">Admin PANEL</a>
+  </div>
+  <!-- end new Display -->
+  <br>    </br>
+  
   <!-- Footer-->
   <?php
   include_once('footer.php')

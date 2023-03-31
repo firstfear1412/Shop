@@ -14,7 +14,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
   <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
   <!-- title -->
-  <title>Fruitkha</title>
+  <title>สินค้าทั้งหมด</title>
 
   <!-- favicon -->
   <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -42,8 +42,8 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
 <!-- product section -->
 <div class="product-section mt-150 mb-150">
-
   <div class="container">
+
     <div class="row flex-row">
 
 

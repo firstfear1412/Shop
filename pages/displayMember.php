@@ -16,7 +16,9 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 <!DOCTYPE html>
 <html lang="en">
 <html>
-
+<header>
+    <title>Display Member</title>
+</header>
 
 
 <body>

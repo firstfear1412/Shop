@@ -2,6 +2,9 @@
 include_once("connectDB.php");
 $conn = new DB_conn; //สร้าง object ชื่อ $condb
 ?>
+    <?php
+    include_once("header.php")
+    ?> 
 
 <!DOCTYPE html>
 <html lang="en">
@@ -9,47 +12,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
 
 <head>
-
-
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
-
-	<!-- title -->
-	<title>Fruitkha</title>
-
-	<!-- favicon -->
-	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-	<!-- fontawesome -->
-	<link rel="stylesheet" href="../assets/css/all.min.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-	<!-- owl carousel -->
-	<link rel="stylesheet" href="../assets/css/owl.carousel.css">
-	<!-- magnific popup -->
-	<link rel="stylesheet" href="../assets/css/magnific-popup.css">
-	<!-- animate css -->
-	<link rel="stylesheet" href="../assets/css/animate.css">
-	<!-- mean menu css -->
-	<link rel="stylesheet" href="../assets/css/meanmenu.min.css">
-	<!-- main style -->
-	<link rel="stylesheet" href="../assets/css/main.css">
-	<!-- responsive -->
-	<link rel="stylesheet" href="../assets/css/responsive.css">
-
-
-              <!-- icon -->
-              <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-              <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
-              <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"> -->
-
-
-
-
+	<title>Display Products</title>
 </head>
 
 
@@ -67,9 +30,6 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
     <!--PreLoader Ends-->
 
     <!-- header -->
-    <?php
-    include_once("header.php")
-    ?> 
     <!-- end header -->
     <!-- hero area -->
 	<div class="hero-area hero-bg">

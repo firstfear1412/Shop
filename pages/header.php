@@ -7,15 +7,11 @@ session_start(); // เริ่มต้น session
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
-
-  <!-- title -->
-  <title>Fruitkha</title>
 
   <!-- favicon -->
   <?php echo "<link rel='shortcut icon' type='image/png' href=' $parentPath/assets/img/favicon.png'>"; ?>
@@ -60,7 +56,7 @@ session_start(); // เริ่มต้น session
         <div class="main-menu-wrap">
           <!-- logo -->
           <div class="site-logo">
-            <?php echo "<a href='$parentPath/index.php'><img src='$parentPath/assets/img/logo.png' alt=''></a>" ?>
+            <?php echo "<a href='$parentPath/index.php'><img src='$parentPath/assets/img/logo1.png' alt=''></a>" ?>
           </div>
           <!-- logo -->
 
