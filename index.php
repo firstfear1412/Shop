@@ -1,45 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
-
-	<!-- title -->
-	<title>Fruitkha</title>
-
-	<!-- favicon -->
-	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
-	<!-- google font -->
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-	<!-- fontawesome -->
-	<link rel="stylesheet" href="assets/css/all.min.css">
-	<!-- bootstrap -->
-	<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-	<!-- owl carousel -->
-	<link rel="stylesheet" href="assets/css/owl.carousel.css">
-	<!-- magnific popup -->
-	<link rel="stylesheet" href="assets/css/magnific-popup.css">
-	<!-- animate css -->
-	<link rel="stylesheet" href="assets/css/animate.css">
-	<!-- mean menu css -->
-	<link rel="stylesheet" href="assets/css/meanmenu.min.css">
-	<!-- main style -->
-	<link rel="stylesheet" href="assets/css/main.css">
-	<!-- responsive -->
-	<link rel="stylesheet" href="assets/css/responsive.css">
-
-</head>
-
-<body>
-	<?php
+<?php
 	//include_once("header.php");
 	include_once("pages/header.php");
 
 	?>
+<head>
+	<!-- title -->
+	<title>OTOP Nakhonpanom</title>
+
+</head>
+
+<body>
+	
 
 	<!-- hero area -->
 	<div class="hero-area hero-bg">
@@ -48,39 +21,38 @@
 				<div class="col-lg-9 offset-lg-2 text-center">
 					<div class="hero-text">
 						<div class="hero-text-tablecell">
-							<p class="subtitle">Fresh & Organic</p>
-							<h1>Delicious Seasonal Fruits</h1>
-							<div class="hero-btns">
-								<a href="shop.html" class="boxed-btn">Fruit Collection</a>
-								<a href="contact.html" class="bordered-btn">Contact Us</a>
+							<p class="subtitle">สินค้า OTOP • จังหวัดนครพนม</p>
+							<h1>กระเป๋าสานจากต้นกก</h1>
+							<div id="navbarResponsive">
+								<div class="hero-btns">
+									<a href="#shop" class="boxed-btn">ซื้อเลย!</a>
+								</div>
 							</div>
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- end hero area -->
-
-
 	<?php
 	include_once("pages/features.php");
 	?>
-
-	
-	<div class="row ">
-		<div class="col-lg-8 offset-lg-2 text-center">
-			<div class="section-title">
-				<h3><span class="orange-text">Our</span> Products</h3>
-				<p>
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-					Aliquid, fuga quas itaque eveniet beatae optio.
-				</p>
+	<!-- end hero area -->
+	<div class="product-section mt-150 mb-150" id="shop">
+		<div class="container">
+			<div class="row ">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">
+						<h3><span class="orange-text">สินค้า</span> ของเรา</h3>
+						<p>
+							กระเป๋าสานจากต้นกก รูปทรงสวย ทันสมัย สินค้า OTOP ผลิดโดยฝีมือของจังหวัดนครพนม
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	
-
 	<?php
 	include_once("pages/prod_section.php");
 	include_once("pages/footer.php");

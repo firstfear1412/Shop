@@ -1,6 +1,9 @@
 <?php
 	include_once("pages/header.php");
 ?>
+<header>
+  <title>Register</title>
+</header>
 <!DOCTYPE html>
 <html lang="en">
 <html>
