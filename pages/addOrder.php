@@ -50,7 +50,7 @@ if (mysqli_query($server, $sql)) {
         while ($data = mysqli_fetch_array($sqlSelectProduct)) {
             $sumPerItem = $data['prod_price'] * $quantity;
         }
-        $sql = $conndb->insert_orderProductTest($last_id,$prod_id,$quantity,$sumPerItem);
+        $sql = $conndb->insert_orderProduct($last_id,$prod_id,$quantity,$sumPerItem);
         mysqli_query($server, $sql);
 
     $_SESSION['shopping_cart'] = array();

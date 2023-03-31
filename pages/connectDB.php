@@ -135,7 +135,7 @@ class DB_conn
 
     }
 
-    public function insert_orderProductTest($order_id,$prod_id,$quantity,$sumPerItem)
+    public function insert_orderProduct($order_id,$prod_id,$quantity,$sumPerItem)
     {
 
         $strSQL="INSERT INTO order_product(order_id,prod_id,quantity,sumPerItem) 

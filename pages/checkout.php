@@ -113,13 +113,28 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 									<div class="card-body">
 										<div class="billing-address-form">
-											<form id="userForm" action="addOrder.php">
-												<p><input type="text" id="name" name="name" value="<?php echo $name ?>"></p>
-												<p><input type="email" id="name" name="email" value="<?php echo $email ?> "></p>
-												<p><input type="text" id="name" name="address" value="<?php echo $address ?>"></p>
-												<p><input type="tel" name="mobile" placeholder="Phone" required></p>
-												<p><input type="hidden" name="id" value="<?php echo $member_id ?>"></p>
-											</form>
+											<?php
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตรวจสอบสถานะการล็อกอิน
+												echo "
+												<form id='userForm' action='addOrder.php'>
+												<p><input type='text' id='name' name='name' value='$name'></p>
+												<p><input type='email' id='name' name='email' value='$email'></p>
+												<p><input type='text' id='name' name='address' value='$address'></p>
+												<p><input type='tel' name='mobile' placeholder='Phone' required></p>
+												<p><input type='hidden' name='id' value='<?php echo $member_id ?>'></p>
+												</form>";
+											}
+											else{
+												echo "
+												<form id='userForm' action='addOrder.php'>
+												<p><input type='text' id='name' name='name' placeholder='Name'></p>
+												<p><input type='email' id='name' name='email' placeholder='email'></p>
+												<p><input type='text' id='name' name='address' placeholder='address'></p>
+												<p><input type='tel' name='mobile' placeholder='Phone' required></p>
+												<p><input type='hidden' name='id' value='<?php echo $member_id ?>'></p>
+												</form>";
+											}
+											?>
 										</div>
 									</div>
 								</div>
