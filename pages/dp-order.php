@@ -7,9 +7,6 @@ $parentPath2 = '/Shop/pages'
 
 <?php
 include_once("header.php");
-?>
-
-<?php
 include_once("connectDB.php");
 $conn = new DB_conn; //สร้าง object ชื่อ $condb
 ?>
@@ -52,7 +49,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
   <table class="layout-table">
     <div class="container">
-      <thead class="cart-table-head text-center">
+      <thead class="cart-table-head text-center ">
 
         <tr>
           <th class="column-name">OrderID</th>
@@ -61,6 +58,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
           <th class="column-name">email</th>
           <th class="column-name">Address</th>
           <th class="column-name">Phone</th>
+          <th class="column-name">Total</th>
           <th class="column-name">Status</th>
           <th class="column-name">แก้ไข</th>
           <th class="column-name">ลบ</th>
@@ -69,9 +67,8 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
       <?php
       $sql = $conn->display_order();
       while ($data = mysqli_fetch_array($sql)) {
-        // echo $data['first_name']; 
         ?>
-        <tbody class="align-middle">
+        <tbody class="align-middle table-bordered">
           <tr>
             <td class="row-text">
               <?php echo $data['order_id'] ?>
@@ -85,13 +82,15 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
             <td class="row-email">
               <?php echo $data['email'] ?>
             </td>
-            <td class="row-text">
+            <td class="row-address">
               <?php echo $data['address'] ?>
             </td>
             <td class="row-text">
               <?php echo $data['phone'] ?>
             </td>
             <td class="row-text">
+              <?php echo $data['total_ship'] ?>
+            </td>  <td class="row-text">
               <?php echo $data['status'] ?>
             </td>
             <td class="member-edit"><a href="editOrder.php?id=<?php echo $data['order_id'] ?>"><i

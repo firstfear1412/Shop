@@ -31,8 +31,9 @@ include_once("pages/header.php");
             <div class="row">
                 <div class="col-lg-8 offset-lg-2 text-center">
                     <div class="breadcrumb-text">
-                        <p>Admin panel</p>
-                        <h1>Welcome Admin!</h1>
+                        <p >กระเป๋าสานจากต้นกก</p>
+                        <p>สินค้า OTOP • จังหวัดนครพนม </p>
+                        <h1>Welcome Shop!</h1>
                     </div>
                 </div>
             </div>

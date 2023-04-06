@@ -71,6 +71,12 @@ class DB_conn
         return $str;
     }
 
+    public function select_prod($id)
+    {
+        $str = mysqli_query($this->conn, "SELECT * from shop_prod where prod_id = '$id' ");
+        return $str;
+    }
+
 
     public function del_prod($id)
     {
@@ -123,16 +129,12 @@ class DB_conn
 
     }
 
-    public function insert_orderProductTest($order_id, $prod_id, $quantity, $sumPerItem)
+    public function insert_orderProduct($order_id, $prod_id, $quantity, $sumPerItem)
     {
 
         $strSQL = "INSERT INTO order_product(order_id,prod_id,quantity,sumPerItem) 
         VALUES ($order_id,$prod_id,$quantity,$sumPerItem)";
         return ($strSQL);
-
-        // $sql = "insert into member(name,email,username,password,address)
-        // values('$name','$email','$username','$password','$address')";
-        // return ($sql);
 
 
     }
@@ -151,7 +153,9 @@ class DB_conn
         $str = mysqli_query($this->conn, "UPDATE orders SET status = '$status'");
         return $str;
     }
-    public function edit_order($order_id, $member_id, $phone, $name, $email, $address, $status)
+
+    
+    public function edit_order($order_id,$member_id,$phone,$name,$email,$address,$status)
     {
         $str = mysqli_query($this->conn, "UPDATE orders SET name = '$name', member_id = '$member_id' , phone = '$phone',email = '$email',address = '$address',status = '$status' WHERE order_id = '$order_id' ");
         return $str;
@@ -161,6 +165,23 @@ class DB_conn
         $str = mysqli_query($this->conn, "DELETE FROM orders WHERE order_id = $id ");
         return $str;
     }
+
+
+    public function select_order($order_id)
+    {
+        $str = mysqli_query($this->conn, "SELECT * FROM orders WHERE order_id = $order_id" );
+        return $str;
+    }
+
+    public function select_orderAll($order_id)
+{
+    $str = mysqli_query($this->conn, "SELECT *
+        FROM orders o
+        INNER JOIN order_product op ON o.order_id = op.order_id
+        INNER JOIN shop_prod p ON op.prod_id = p.prod_id
+        WHERE o.order_id = $order_id  ");
+        return $str;
+}
 
 }
 

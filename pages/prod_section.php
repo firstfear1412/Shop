@@ -64,12 +64,14 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
         ?>
         <div class="col-lg-4 col-md-6 text-center">
           <div class="single-product-item">
-            <a href="<?php echo $parentPath ?>single-product.php?q=<?php echo base64_encode($data['prod_id']); ?>">
-              <img src="<?php echo "$parentPathImg " ?>" alt="" /></a>
+            <div class="product-image">
+							<a href="<?php echo $parentPath ?>single-product.php?p_id=<?php echo $data['prod_id']; ?>">
+								<img src="<?php echo "$parentPathImg " ?>" alt="" /></a>
+						</div>
             <h3>
               <?php echo $data['prod_name'] ?>
             </h3>
-            <p class="product-price"><span>Per Kg</span>
+            <p class="product-price"><span>Price</span>
               <?php echo $data['prod_price'] . "฿" ?>
             </p>
             <!-- ค่าที่ส่ง p_id,act=add,qty=1 -->

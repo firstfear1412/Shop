@@ -1,7 +1,7 @@
 <?php
-//test
-error_reporting(error_reporting() & ~E_NOTICE);
-session_start();
+include_once('header.php'); 
+// error_reporting(error_reporting() & ~E_NOTICE);
+// session_start();
 if (isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'])) {
 
 	if (isset($_REQUEST['p_id'])) {
@@ -29,10 +29,7 @@ if (isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'
 	{
 		unset($_SESSION['shopping_cart'][$p_id]);
 	}
-	if ($_REQUEST['act'] == 'clear') {
-
-		unset($_SESSION['shopping_cart']);
-	}
+	
 
 
 	if ($_REQUEST['act'] == 'update') {
@@ -50,23 +47,13 @@ if (isset($_REQUEST['p_id']) || isset($_REQUEST['act']) || isset($_REQUEST['qty'
 	$p_id = 0;
 	$qty = 0;
 }
-// $p_id = $_REQUEST['p_id'];
-// $act = $_REQUEST['act'];
-// $qty = $_REQUEST['qty'];
-// $qty = 0;
-
-include_once('header.php');
 
 
 if (isset($_SESSION['shopping_cart'])) {
 	$sizearr = sizeof($_SESSION['shopping_cart']);
+	$_SESSION['num'] =  $sizearr;
 	echo "<script>const numProducts = $sizearr;</script>";
 }
-// else{
-// 	$sizearr = sizeof($_SESSION['shopping_cart']);
-// 	echo "<script>const numProducts = $sizearr;</script>";
-// 	echo "ELSE";
-// }
 
 
 
@@ -75,15 +62,23 @@ if (isset($_SESSION['shopping_cart'])) {
 <!DOCTYPE html>
 <html lang="en">
 
+
+
 <head>
 	<!-- title -->
 	<title>Cart</title>
+	
 </head>
 
 <body>
 
-
-
+	<!--PreLoader-->
+	<div class="loader">
+		<div class="loader-inner">
+			<div class="circle"></div>
+		</div>
+	</div>
+	<!--PreLoader Ends-->
 
 
 	<!-- breadcrumb-section -->
@@ -100,6 +95,7 @@ if (isset($_SESSION['shopping_cart'])) {
 		</div>
 	</div>
 	<!-- end breadcrumb section -->
+
 
 
 
@@ -127,11 +123,7 @@ if (isset($_SESSION['shopping_cart'])) {
 							<form id="Update Cart" name="Update Cart" method="post" action="?act=update">
 
 								<tbody>
-									<?php
-
-									// $sizearr = sizeof($_SESSION['shopping_cart']);
-									// echo "<script>const numProducts = $sizearr;</script>";
-									?>
+								
 
 									<?php
 									include_once("connectDB.php");
@@ -158,23 +150,13 @@ if (isset($_SESSION['shopping_cart'])) {
 													$shipping = 45;
 													$totalsumship = $total + $shipping;
 
-													// $itemeqty = $p_qty;
-													// $itemePrice = $data['prod_price'];
-													// $itemeSum = $data['prod_price'] * $p_qty;
-													// $_SESSION['sum'][$p_id] = $itemeSum;	
-													// $_SESSION['sum'][$p_id] = array('qty' => $itemeqty, 'sum' => $itemeSum);
-													// foreach ($_SESSION['sum'] as $p_id => $values) {
-													// 	$_SESSION['sum'][$p_id] = $values;
-													// }
-													// print_r($_SESSION['sum']);
-
 													echo "<script>const sumshipJS = $shipping;</script>";
 										?>
 
 
 													<tr class="table-body-row">
 
-														<td class="product-remove"><a href="cartED.php?p_id=<?php echo $data['prod_id'] ?>&act=remove&qty"><i class="far fa-window-close"></i></a></td>
+														<td class="product-remove"><a href="cart.php?p_id=<?php echo $data['prod_id'] ?>&act=remove&qty"><i class="far fa-window-close"></i></a></td>
 														<!-- รูป -->
 														<td class="product-image"><img src="<?php echo $data['prod_img'] ?>" alt=""></td>
 
@@ -182,7 +164,7 @@ if (isset($_SESSION['shopping_cart'])) {
 														<td class="product-name"><?php echo $data['prod_name'] ?></td>
 
 														<!-- ราคา -->
-														<td class="product-price"><?php echo $data['prod_price'] ?><p></p><input type="hidden" id="price<?php echo $i; ?>" name="price<?php echo $i; ?>" value="<?php echo $data['prod_price']; ?>"></td>
+														<td class="product-price">฿<?php echo $data['prod_price'] ?><p></p><input type="hidden" id="price<?php echo $i; ?>" name="price<?php echo $i; ?>" value="<?php echo $data['prod_price']; ?>"></td>
 
 														<!-- จำนวนชิ้น -->
 														<?php echo "<td class='product-quantity'><input type='number' id='quantity$i' name='amount[$p_id]' value='$p_qty' min='1' onchange='updateTotal()'></td>" ?>
@@ -190,11 +172,8 @@ if (isset($_SESSION['shopping_cart'])) {
 
 														<!-- ราคาของสินค้า -->
 														<td class="product-total">
-															<p><span type="text" id="total<?php echo $i; ?>" value="<?php echo $data["prod_price"] * $p_qty; ?>"><?php echo $data["prod_price"] * $p_qty; ?></span></p>
+															<p>฿<span type="text" id="total<?php echo $i; ?>" value="<?php echo $data["prod_price"] * $p_qty; ?>"><?php echo $data["prod_price"] * $p_qty; ?></span></p>
 														</td>
-
-
-
 
 
 													</tr>
@@ -278,10 +257,10 @@ if (isset($_SESSION['shopping_cart'])) {
 										<?php
 
 										if (isset($total) && $total == true) {
-											echo '<p><span id="grandTotal" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+											echo '<p>฿<span id="grandTotal" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
 										} else {
 											$total = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumship
-											echo '<p><span id="grandTotal" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
+											echo '<p>฿<span id="grandTotal" value="' . number_format($total, 2) . '">' . number_format($total, 2) . '</span></p>';
 										}
 										?>
 
@@ -294,15 +273,13 @@ if (isset($_SESSION['shopping_cart'])) {
 								<tr class="total-data">
 									<td><strong>Shopping: </strong></td>
 									<td>
-										<!-- <?php echo '<p><span id="sumship" value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>'; ?> -->
-
 
 										<?php
 										if (isset($shipping) && $shipping == true) {
-											echo '<p><span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
+											echo '<p>฿<span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
 										} else {
 											$shipping = 0; // กำหนดค่าเริ่มต้นให้กับ $shipping
-											echo '<p><span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
+											echo '<p>฿<span value="' . number_format($shipping, 2) . '">' . number_format($shipping, 2) . '</span></p>';
 										}
 										?>
 
@@ -317,10 +294,10 @@ if (isset($_SESSION['shopping_cart'])) {
 
 										<?php
 										if (isset($totalsumship) && $totalsumship == true) {
-											echo '<p><span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
+											echo '<p>฿<span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
 										} else {
 											$totalsumship = 0; // กำหนดค่าเริ่มต้นให้กับ $totalsumshipsumship
-											echo '<p><span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
+											echo '<p>฿<span id="sumship" value="' . number_format($totalsumship, 2) . '">' . number_format($totalsumship, 2) . '</span></p>';
 										}
 										?>
 
@@ -365,7 +342,9 @@ if (isset($_SESSION['shopping_cart'])) {
 											}
 										}
 										?>
-										<button class="cart-btn-b" id="Checkout" name="Checkout">Checkout</button>
+										<!-- <button class="cart-btn-b" id="Checkout" name="Checkout">Checkout</button> -->
+										<button class="cart-btn-b" id="Checkout" name="Checkout" onclick="return confirm('คุณ Update Cart เเล้วใช่หรือไม่')">Checkout</button>
+
 									</form>
 
 								<?php
@@ -403,18 +382,7 @@ if (isset($_SESSION['shopping_cart'])) {
 							</style>
 
 
-
-
-
-							<!-- <a href="cart.html" class="boxed-btn">Update Cart</a> -->
-							<!-- <a href="checkout.php" class="boxed-btn black">Check Out</a> -->
-
-
-
-
 						</div>
-
-
 
 
 					</div>
@@ -430,16 +398,7 @@ if (isset($_SESSION['shopping_cart'])) {
 
 
 
-<!-- <form id="Checkout" name="Checkout" method="post" action="checkoutTest.php">
-	<?php
-	if (!empty($_SESSION['sum'])) {
-		foreach ($_SESSION['sum'] as $p_id => $values) {
-			echo '<input type="hidden" name="product_sum[' . $p_id . ']" value="' . $values['sum'] . '">';
-			echo '<input type="hidden" name="product_qty[' . $p_id . ']" value="' . $values['qty'] . '">';
-		}
-	}
-	?>
-	<button class="cart-btn-b" id="Checkout" name="Checkout">Checkout</button> -->
+
 
 
 

@@ -16,7 +16,7 @@
 <!-- footer -->
 <div class="footer-area">
 	<div class="container">
-		<div class="row">
+		<div class="row" style="justify-content: center;">
 			<div class="col-lg-3 col-md-6">
 				<div class="footer-box about-widget">
 					<h2 class="widget-title">About us</h2>
@@ -38,14 +38,10 @@
 				<div class="footer-box pages">
 					<h2 class="widget-title">Pages</h2>
 					<ul>
-						<li><a href="index.html">Home</a>
+						<li><a href="index.php">Home</a>
 						</li>
-						<li><a href="about.html">About</a>
-						</li>
-						<li><a href="services.html">Shop</a>
-						</li>
-						<!-- <li><a href="news.html">News</a></li> -->
-						<li><a href="contact.html">Contact</a>
+						<li><a href="about.php">About</a>
+						</li><li><a href="index.php#shop">Shop</a>
 						</li>
 					</ul>
 				</div>

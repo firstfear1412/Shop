@@ -15,7 +15,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 		content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>Fruitkha</title>
+	<title>Edit order</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="../assets/img/favicon.png">
@@ -62,7 +62,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 				<div class="col-lg-8 offset-lg-2 text-center">
 					<div class="breadcrumb-text">
 						<p>Admin panel</p>
-						<h1>Edit User</h1>
+						<h1>Edit order</h1>
 					</div>
 				</div>
 			</div>
@@ -85,7 +85,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 	?>
 
 	<div class="container">
-		<h3 class="mt-5">แก้ไขข้อมูลสมาชิก</h3>
+		<h3 class="mt-5">แก้ไขข้อมูลรายการสั่งซื้อ</h3>
 		<form method="POST">
 			<div class="mb-3">
 				<label for="username" class="form-label">UserID:</label>
@@ -105,7 +105,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 			</div>
 			<div class="mb-3">
 				<label for="email" class="form-label">Address:</label>
-				<input type="text" class="form-control" id="adress" name="adress" value=<?php echo $address; ?>>
+				<input type="text" class="form-control" id="adress" name="address" value=<?php echo $address; ?>>
 			</div>
 			<div class="mb-3">
 				<label for="email" class="form-label">Phone:</label>
@@ -117,12 +117,14 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 					<option value="<?php echo $status ?>">
 						<?php echo $status ?>
 					</option>
-					<option value="ชำระแล้ว">ชำระแล้ว</option>
+					<option value="กำลังจัดเตรียมสินค้า">กำลังจัดเตรียมสินค้า</option>
 					<option value="กำลังจัดส่ง">กำลังจัดส่ง</option>
-					<option value="กำลังจัดส่ง">กำลังจัดส่ง</option>
+					<option value="จัดส่งไม่สำเร็จ">จัดส่งไม่สำเร็จ</option>				
+					<option value="รับสินค้าเเล้ว">รับสินค้าเเล้ว</option>
+					<option value="สินค้าถูกส่งกลับ">สินค้าถูกส่งกลับ</option>
 				</select>
 			</div>
-			<button type="submit" class="btn btn-primary" id="edit" name="edit">บันทึกการเปลี่ยนแปลง </button>
+			<button type="submit" class="cart-btn" id="edit" name="edit">บันทึกการเปลี่ยนแปลง </button>
 		</form>
 	</div>
 	<?php
@@ -146,12 +148,14 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 	}
 	?>
 
+	<br><br><br>
 	<!-- Footer-->
 	<?php
+	include_once("footer.php")
 	?>
 
 	<!-- Back to Top -->
-	<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+	<!-- <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a> -->
 	<!-- jquery -->
 	<script src="../assets/js/jquery-1.11.3.min.js"></script>
 	<!-- bootstrap -->

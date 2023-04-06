@@ -3,10 +3,15 @@
 $parentPath = '/Shop';
 $parentPath2 = '/Shop/pages';
 session_start(); // เริ่มต้น session
+if (!isset($_SESSION['shopping_cart'])) {
+
+				$_SESSION['shopping_cart'] = array();
+			}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -64,50 +69,25 @@ session_start(); // เริ่มต้น session
           <nav class="main-menu">
             <ul>
               <li class="current-list-item">
-                <a href="#">Home</a>
-                <ul class="sub-menu">
-                  <li><?php echo " <a href=' $parentPath/index.php'>Static Home</a>"; ?></li>
-                  <li><?php echo " <a href=' $parentPath2/addProd.php'>AddProd</a>"; ?></li>
-                </ul>
+                <a href="<?php echo $parentPath ?>/index.php#">Home</a>
               </li>
-              <li><a href="about.html">About</a></li>
+              <li><a href="<?php echo $parentPath ?>/about.php">About</a></li>
               <li>
-                <a href="#">Pages</a>
-                <ul class="sub-menu">
-                  <li><?php echo "<a href='$parentPath/404.php'>404 page</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath/about.html'>About</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/cart.php'>Cart</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath/checkout.php'>Check Out</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath/contact.html'>Contact</a>"; ?></li>
-                  <!-- <li><a href="news.html">News</a></li> -->
-                  <li><?php echo "<a href='$parentPath/shop.php'>Shop</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/displayMember.php'>DisplayMember</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/displayProd.php'>DisplayProd</a>"; ?></li> 
-                </ul>
-              </li>
-              <!-- <li>
-                    <a href="news.html">News</a>
-                    <ul class="sub-menu">
-                      <li><a href="news.html">News</a></li>
-                      <li><a href="single-news.html">Single News</a></li>
-                    </ul>
-                  </li> -->
-              <li><a href="contact.html">Contact</a></li>
-              <li>
-                <a href="shop.html">Shop</a>
-                <ul class="sub-menu">
-                  <li><?php echo "<a href='$parentPath/shop.php'>Shop</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/checkout.php'>Check Out</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/single-product.php'>Single Product</a>"; ?></li>
-                  <li><?php echo "<a href='$parentPath2/cart.php'>Cart</a>"; ?></li>
-                </ul>
+                <a href="<?php echo $parentPath ?>/shop.php">Shop</a>
               </li>
 
               <?php
               if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตรวจสอบสถานะการล็อกอิน
                 $username = $_SESSION['username'];
-                if($username == 'admin'){
-                  echo "<li><a href='$parentPath2/admin-panel.php'>Admin Panel</a></li>";
+                if ($username == 'admin') {
+                  echo "<li><a href='$parentPath2/admin-panel.php'>Admin Panel</a>
+                          <ul class='sub-menu'>
+                            <li><a href='$parentPath2/displayMember.php'>Display member</a></li>
+                            <li><a href='$parentPath2/displayProd.php'>Display product</a></li>
+                            <li><a href='$parentPath2/dp-order.php'>Display order</a></li>
+                          </ul>
+                          </li>
+                  ";
                 }
                 echo "<li style='float:right'>
                         <a href='#'><i class='fa fa-user'> welcome, $username</i></a>
@@ -115,8 +95,7 @@ session_start(); // เริ่มต้น session
                             <li><a href='$parentPath/logout.php'>Logout</a></li>
                           </ul>
                       </li>";
-              }
-              else {
+              } else {
                 echo "<li style='float:right'>
                           <a href='#'><i class='fa fa-user'></i></a>
                           <ul class='sub-menu'>
@@ -127,14 +106,12 @@ session_start(); // เริ่มต้น session
               }
 
               ?>
+              
               <li style="float:right">
                 <?php echo "<a href='$parentPath2/cart.php'><i class='fa fa-shopping-cart'></i></a>"; ?>
               </li>
             </ul>
           </nav>
-          <!-- <a class="mobile-show search-bar-icon" href="#"
-                ><i class="fas fa-search"></i
-              ></a> -->
           <div class="mobile-menu"></div>
           <!-- menu end -->
         </div>

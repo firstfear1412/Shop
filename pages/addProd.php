@@ -75,21 +75,21 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
                             <form method="POST" action="insert_product.php"enctype="multipart/form-data">
                                           <div class="mb-3">
                                                         <h2><label class="form-label">Product Name :</label><h2>
-                                                        <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อสินค้า">
+                                                        <input type="text" class="form-control" id="name" name="name" placeholder="ชื่อสินค้า" required>
                                           </div>
                                           <div class="mb-3">
                                                         <h2><label class="form-label">Detail :</label><h2>
                                                         <!-- <input type="text" class="form-control" id="detail" name="detail"> -->
-                                                        <textarea class="form-control" name="detail" id="detail" cols="auto" rows="auto" placeholder="รายละเอียด"></textarea>
+                                                        <textarea class="form-control" name="detail" id="detail" cols="auto" rows="auto" placeholder="รายละเอียด" required></textarea>
                                           </div>
                                           <div class="mb-3">
                                                         <h2><label class="form-label">Price : </label><h2>
-                                                        <input type="text" class="form-control" id="price" name="price" placeholder="ราคาสินค้า">
+                                                        <input type="text" class="form-control" id="price" name="price" placeholder="ราคาสินค้า" required>
                                           </div>
                                           
                                           <div class="mb-3">
                                                         <h2><label class="form-label">Picture : </label><h2>
-                                                        <input type="file"  class="form-control" id="picture"name="picture" >
+                                                        <input type="file"  class="form-control" id="picture"name="picture" required>
 
                                                                       
                                           </div>

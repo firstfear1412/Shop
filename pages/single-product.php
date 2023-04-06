@@ -5,43 +5,27 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
 $parentPath = '/Shop';
 $parentPath2 = '/Shop/pages';
 $qty = 1;
+$id = isset($_GET['p_id']) ? $_GET['p_id'] : 1;
+$sql = $conn->display_prod_edit($id); //เลือก
+while ($data = mysqli_fetch_array($sql)) {
+
+
+  $p_name = $data['prod_name'];
+  $p_price = $data['prod_price'];
+  $p_detail = $data['prod_detail'];
+  $p_img = $data['prod_img'];
+}
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-
-
+ <?php
+  include_once("header.php")
+  ?>
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
-  <!-- title -->
-  <title>Fruitkha</title>
+  <title><?php echo $p_name ?></title>
+ 
 
-  <!-- favicon -->
-  <link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
-  <!-- google font -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
-  <!-- fontawesome -->
-  <link rel="stylesheet" href="../assets/css/all.min.css">
-  <!-- bootstrap -->
-  <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-  <!-- owl carousel -->
-  <link rel="stylesheet" href="../assets/css/owl.carousel.css">
-  <!-- magnific popup -->
-  <link rel="stylesheet" href="../assets/css/magnific-popup.css">
-  <!-- animate css -->
-  <link rel="stylesheet" href="../assets/css/animate.css">
-  <!-- mean menu css -->
-  <link rel="stylesheet" href="../assets/css/meanmenu.min.css">
-  <!-- main style -->
-  <link rel="stylesheet" href="../assets/css/main.css">
-  <!-- responsive -->
-  <link rel="stylesheet" href="../assets/css/responsive.css">
+
 
 </head>
 
@@ -57,11 +41,7 @@ $qty = 1;
   </div>
   <!--PreLoader Ends-->
 
-  <!-- header -->
-  <?php
-  include_once("header.php")
-  ?>
-  <!-- end header -->
+
 
 
   <!-- search area -->
@@ -85,12 +65,7 @@ $qty = 1;
   </div>
   <!-- end search arewa -->
 
-  <?php
-
-  $id = base64_decode($_GET['q']);
-  echo "$id"
-
-  ?>
+ 
 
   <!-- breadcrumb-section -->
   <div class="breadcrumb-section breadcrumb-bg">
@@ -99,7 +74,7 @@ $qty = 1;
         <div class="col-lg-8 offset-lg-2 text-center">
           <div class="breadcrumb-text">
             <p>See more Details</p>
-            <h1>Single Product</h1>
+            <h1><?php echo $p_name ?></h1>
           </div>
         </div>
       </div>
@@ -110,13 +85,9 @@ $qty = 1;
   <!-- single product -->
 
   <?php
-  $sql = $conn->display_prod_edit($id); //เลือก
-  while ($data = mysqli_fetch_array($sql)) {
-    $p_name = $data['prod_name'];
-    $p_price = $data['prod_price'];
-    $p_detail = $data['prod_detail'];
-    $p_img = $data['prod_img'];
-  }
+
+
+
   ?>
 
   <div class="single-product mt-150 mb-150">
@@ -141,7 +112,7 @@ $qty = 1;
             </p>
             <div class="single-product-form">
 
-              <form id="addToCartForm" method="POST" action="<?php echo $parentPath2 ?>/cart.php">
+              <form id="addToCartForm" method="GET" action="<?php echo $parentPath2 ?>/cart.php">
                 <input type="hidden" name="p_id" value="<?php echo $id ?>" />
                 <input type="hidden" name="act" value="add" />
                 <input type="number" name="qty" value="1" min="1" />
@@ -154,21 +125,7 @@ $qty = 1;
               </form>
             </div>
 
-            <h4>Share:</h4>
-            <ul class="product-share">
-              <li>
-                <a href=""><i class="fab fa-facebook-f"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="fab fa-twitter"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="fab fa-google-plus-g"></i></a>
-              </li>
-              <li>
-                <a href=""><i class="fab fa-linkedin"></i></a>
-              </li>
-            </ul>
+         
           </div>
         </div>
       </div>
@@ -188,13 +145,11 @@ $qty = 1;
       <div class="row">
         <div class="col-lg-8 offset-lg-2 text-center">
           <div class="section-title">
-            <h3><span class="orange-text">Related</span> Products</h3>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Aliquid, fuga quas itaque eveniet beatae optio.
-            </p>
+            <h3>สินค้าที่<span class="orange-text">อาจชอบ</span></h3>
           </div>
         </div>
+      </div>
+      </div>
       </div>
 
 

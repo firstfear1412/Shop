@@ -4,7 +4,7 @@
 $parentPath = '/Shop';
 $parentPath2 = '/Shop/pages'
 ?>
-
+<title>Admin</title>
 <?php
 include_once("header.php");
 ?>
@@ -52,7 +52,7 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
     <div class="item-container">
         <a href="displayMember.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 1.5s;">Member</a>
         <a href="displayProd.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2s;">Product</a>
-        <a href="dp-order.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2.5s;">Order</a>
+        <a href="dp-order.php" class="item-box animated fadeInDown services-item-box" style="animation-delay: 2.25s;">Order</a>
     </div>
     </div>
 

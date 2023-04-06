@@ -47,16 +47,32 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
         </div>
     </div>
     <!-- end breadcrumb section -->
+    <br><br><br><br><br><br><br><br>
+
+
 
     <!-- new Display Member -->
     <table class="layout-table">
         <div class="container">
             <thead class="cart-table-head text-center">
-                <tr>
-                    <td colspan="8">
-                        <h3>ข้อมูล สมาชิก </h3>
-                    </td>
-                </tr>
+                <div class="text-center">
+                    <div class="table-header">
+                        <h1 class="PRODUCTLIST">Member Information</h1>
+                    </div>
+                </div>
+
+
+                <style>
+                    .PRODUCTLIST {
+                        font-family: "Poppins", sans-serif;
+                        font-size: 2rem;
+                        letter-spacing: 0.1px;
+                        line-height: 1.8;
+                        color: #F28123;
+                        overflow-x: hidden;
+
+                    }
+                </style>
                 <tr>
                     <th class="column-name">ลําดับ</th>
                     <th class="column-name">Username</th>
@@ -68,7 +84,8 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
                     <th class="column-name">ลบ</th>
                 </tr>
             </thead>
-            <tbody class="align-middle">
+
+            <tbody class="align-middle-table table-bordered">
                 <?php
                 $sql = $conn->display_member();
                 $i = 1;
@@ -82,19 +99,34 @@ $conn = new DB_conn; //สร้าง object ชื่อ $condb
                         <td class="row-text"> <?php echo $data['name'] ?> </td>
                         <td class="row-email"> <?php echo $data['email'] ?> </td>
                         <td class="row-address"> <?php echo $data['address'] ?> </td>
-                        <td class="member-edit"><a href="editMember.php?id=<?php echo $data['member_id'] ?>"><i class="bx bx-edit bx-md" ></i></a></td>
+                        <td class="member-edit"><a href="editMember.php?id=<?php echo $data['member_id'] ?>"><i class="bx bx-edit bx-md"></i></a></td>
                         <td class="member-del"><a href="delMember.php?id=<?php echo $data['member_id'] ?>" class="btn btn-sm btnprimary" onclick="return confirm('คุณต้องการลบข้อมูลใช่หรือไม่')"><i class="bx bx-x-circle bx-md"></i></a></td>
-                    <?php $i++;  ?>
-                <?php
+                        <?php $i++;  ?>
+                    <?php
                 }
                 // 
-                ?>
-
-                </tr>
+                    ?>
+                    </tr>
             </tbody>
         </div>
     </table>
+
+    <div class="text-center">
+        <a href="<?php echo '/Shop/pages/' ?>admin-panel.php" style="margin-top: -50px; margin-bottom: 50px;" class="cart-btn">Admin Panel</a>
+    </div>
     <!-- end new Display -->
+
+    <style>
+        .table-bordered {
+            border-collapse: collapse;
+        }
+
+        .table-bordered td,
+        .table-bordered th {
+            border: 1px solid #efefef;
+            padding: 8px;
+        }
+    </style>
 
     <!-- Footer-->
     <?php

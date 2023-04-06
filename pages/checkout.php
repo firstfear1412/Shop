@@ -43,7 +43,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
 
 	<!-- title -->
-	<title>Cart</title>
+	<title>Checkout</title>
 
 	<!-- favicon -->
 	<link rel="shortcut icon" type="image/png" href="assets/img/favicon.png">
@@ -113,33 +113,32 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
 									<div class="card-body">
 										<div class="billing-address-form">
-											<form id="userForm" action="addOrder.php">
-												<p><input type="text" id="name" name="name" value="<?php echo $name ?>"></p>
-												<p><input type="email" id="name" name="email" value="<?php echo $email ?> "></p>
-												<p><input type="text" id="name" name="address" value="<?php echo $address ?>"></p>
-												<p><input type="tel" id="phone"name="phone" placeholder="Phone" required></p>
-												<p><input type="hidden" name="id" value="<?php echo $member_id ?>"></p>
-											</form>
+											<?php
+											if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตรวจสอบสถานะการล็อกอิน
+												echo "
+												<form id='userForm' method='POST' action='addOrder.php'>
+												<p><input type='text' id='name' name='name' value='$name'></p>
+												<p><input type='email' id='name' name='email' value='$email'></p>
+												<p><input type='text' id='name' name='address' value='$address'></p>
+												<p><input type='tel' name='phone' placeholder='Phone' required></p>
+												<p><input type='hidden' name='id' value='<?php echo $member_id ?>'></p>
+												</form>";
+											} else {
+												echo "
+												<form id='userForm' method='POST' action='addOrder.php'>
+												<p><input type='text' id='name' name='name' placeholder='Name' required></p>
+												<p><input type='email' id='name' name='email' placeholder='email' required></p>
+												<p><input type='text' id='name' name='address' placeholder='address' required></p>
+												<p><input type='tel' name='phone' placeholder='Phone' required></p>
+												<p><input type='hidden' name='id' value='<?php echo $member_id ?>'></p>
+												</form>";
+											}
+											?>
 										</div>
 									</div>
 								</div>
 							</div>
-							<div class="card single-accordion">
-								<div class="card-header" id="headingThree">
-									<h5 class="mb-0">
-										<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-											Card Details
-										</button>
-									</h5>
-								</div>
-								<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-									<div class="card-body">
-										<div class="card-details">
-											<p>Your card details goes here.</p>
-										</div>
-									</div>
-								</div>
-							</div>
+						 
 						</div>
 
 					</div>
@@ -148,12 +147,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 				<div class="col-lg-4">
 					<div class="order-details-wrap">
 						<table class="order-details">
-							<thead>
-								<tr>
-									<th>Your order Details</th>
-									<th>Price</th>
-								</tr>
-							</thead>
+							<tr>
+								<td style="background-color: #efefef;">Your order Detail</td>
+								<td style="background-color: #efefef;">Price</td>
+
+							</tr>
 							<tbody class="order-details-body">
 								<tr>
 									<td>Product</td>
@@ -164,16 +162,13 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 
 								<?php
 
-								// include_once("connectDB.php");
-								// $conn = new DB_conn; //สร้าง object ชื่อ $condb
 
 								// ตรวจสอบว่ามีการส่งค่า $_POST['product_id'] และ $_POST['product_qty'] มาหรือไม่
 
 								if (isset($_POST['product_id']) && isset($_POST['product_qty'])) {
 									$product_ids = $_POST['product_id'];
 									$product_qtys = $_POST['product_qty'];
-									// $total =  $_POST['total'];
-									// $total =0; 
+							
 									// นับจำนวนสินค้าที่ถูกสั่งซื้อ
 									$num_items = count($product_ids);
 
@@ -204,7 +199,7 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 								?>
 											<tr>
 												<td><?php echo $data['prod_name'] ?></td>
-												<td><?php echo $sum ?></td>
+												<td>฿<?php echo $sum ?></td>
 
 											</tr>
 
@@ -222,15 +217,15 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 							<tbody class="checkout-details">
 								<tr>
 									<td>Subtotal</td>
-									<td>$<?php echo $total ?></td>
+									<td>฿<?php echo $total ?></td>
 								</tr>
 								<tr>
 									<td>Shipping</td>
-									<td>$<?php echo $shipping ?></td>
+									<td>฿<?php echo $shipping ?></td>
 								</tr>
 								<tr>
 									<td>Total</td>
-									<td>$<?php echo $totalsumship ?></td>
+									<td>฿<?php echo $totalsumship ?></td>
 								</tr>
 							</tbody>
 						</table>
@@ -239,29 +234,9 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) { // ตร�
 					<?php }
 					?>
 
-					<!-- <a href="#" class="boxed-btn">Place Order</a> -->
-
-					<!-- action="checkout.php" -->
-					<!-- <form action="index.php"> -->
-					<?php
-
-					// include_once("connectDB.php");
-					// $conndb = new DB_conn; //สร้าง object ชื่อ $condb
-					// $con = $conndb->conn;
-
-					// ตรวจสอบว่ามีการส่งค่า $_POST['product_id'] และ $_POST['product_qty'] มาหรือไม่
-
-					// $sql = $conndb->insert_order($member_id, $name, $email, $address, $total);
-					// if (mysqli_query($con, $sql)) {
-					// 	// 	// echo "<script>alert('สมัครสมาชิกสำเร็จ')</script>";
-					// 	// 	// echo "<script>window.location.href='login.php' </script>";
-					// 	// } 
-					// 	// else {
-					// 	// 	echo "<script>alert('เกิดข้อผิดพลาด')</script>";
-					// 	// 	echo "<script>window.location.href='addMember.php' </script>";
-					// }
-					?>
-
+		
+			
+					<br>
 					<button class="cart-btn-b" type="submit" form="userForm">Checkout</button>
 					<!-- </form> -->
 					<?php
